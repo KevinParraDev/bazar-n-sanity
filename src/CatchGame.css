@@ -1,0 +1,90 @@
+.game-container {
+    position: relative;
+    background-color: #d4f4ff;
+    overflow: hidden;
+    border: 2px solid #222;
+}
+
+.sprite-idle {
+    width: 32px;
+    height: 32px;
+    background-image: url('/sprites/crash-idle.png');
+    /* tu imagen */
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    /* si usas pixel art */
+    transform: scale(3);
+    /* Escala a 64x64 pero mantiene los frames */
+    transform-origin: bottom center;
+    /* Para que crezca hacia arriba */
+}
+
+.sprite-run {
+    width: 32px;
+    height: 32px;
+    background-image: url('/sprites/crash-run.png');
+    /* tu imagen */
+    background-repeat: no-repeat;
+    image-rendering: pixelated;
+    /* si usas pixel art */
+    transform: scale(3);
+    /* Escala a 64x64 pero mantiene los frames */
+    transform-origin: bottom center;
+    /* Para que crezca hacia arriba */
+}
+
+.flipped {
+    transform: scaleX(-1) scale(3);
+    /* Voltea horizontalmente */
+}
+
+.player-idle {
+    animation: idle-animation 1s steps(6) infinite;
+    /* 6 frames */
+    position: absolute;
+    bottom: 0;
+}
+
+.player-run {
+    animation: run-animation 0.5s steps(7) infinite;
+    /* 6 frames */
+    position: absolute;
+    bottom: 0;
+}
+
+@keyframes run-animation {
+    from {
+        background-position: 0px;
+    }
+
+    to {
+        background-position: -224px;
+        /* 64px * 6 frames = 384px */
+    }
+}
+
+@keyframes idle-animation {
+    from {
+        background-position: 0px;
+    }
+
+    to {
+        background-position: -192px;
+        /* 64px * 6 frames = 384px */
+    }
+}
+
+.object {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: #34d399;
+    border-radius: 50%;
+}
+
+.score {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-weight: bold;
+}
