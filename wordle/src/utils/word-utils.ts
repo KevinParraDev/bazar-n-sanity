@@ -1,4 +1,4 @@
-const WORDS = ["crash", "nitro", "polar", "wumpa", "bonus", "cajas", "karts", "gemas", "cortex", "geary", "chick", "krunk", "oxide" ];
+const WORDS = ["crash", "nitro", "polar", "wumpa", "bonus", "cajas", "karts", "gemas", "geary", "chick", "krunk", "oxide" ];
 
 export function getRandomWord(): string {
   return WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();
