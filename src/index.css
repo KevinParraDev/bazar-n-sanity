@@ -60,7 +60,6 @@ button {
 }
 button:hover {
   color: white;
-  font-size: 1.1em;
 }
 button:focus,
 button:focus-visible {

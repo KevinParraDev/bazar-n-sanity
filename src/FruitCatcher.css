@@ -1,0 +1,25 @@
+
+.game-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vh;
+  height: 100vh;
+  background-color: #000;
+}
+.minigame-button{
+  padding-inline: 10px;
+  font-size:x-large;
+  margin-inline: 10px;
+}
+.minigame-button:hover {
+  color: white;
+  font-size:x-large;
+}
+.points
+{
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: x-large;
+  color: #ffe6d7;
+}
