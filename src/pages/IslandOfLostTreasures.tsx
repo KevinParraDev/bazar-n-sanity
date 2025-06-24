@@ -1,14 +1,16 @@
 
-import Navbar from '../components/Islands/Navbar';
-import StorePage from './StorePage';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const IslandOfLostTreasures = () => {
-  return (
-    <div>
-      <Navbar username="Kevin" />
-      <StorePage></StorePage>
-    </div>
-  );
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    // Redirigir a la nueva vista de exploración de la isla
+    navigate('/explore/lost-treasures');
+  }, [navigate]);
+
+  return null;
 };
 
 export default IslandOfLostTreasures;

@@ -1,5 +1,6 @@
 import React from "react";
 import StoreGrid from "../components/Store/StoreGrid";
+import Navbar from "../components/Islands/Navbar";
 import type { Product } from "../components/Store/types";
 
 const products: Product[] = [
@@ -52,6 +53,7 @@ const products: Product[] = [
 const StorePage: React.FC = () => {
   return (
     <div>
+      <Navbar username="Kevin" />
       <h1 style={{ fontSize: "2rem", padding: "16px" }}>Bazar N. Sanity</h1>
       <StoreGrid products={products} />
     </div>

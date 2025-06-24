@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import { useEconomy } from "../../context/EconomyContext";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface Props {
   username: string;
@@ -11,6 +11,10 @@ const Navbar: React.FC<Props> = ({ username }) => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { wumpaCount } = useEconomy();
+  const location = useLocation();
+  
+  // Verificar si estamos en la página de inicio
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -21,15 +25,18 @@ const Navbar: React.FC<Props> = ({ username }) => {
   return (
     <>
       <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
-        <div className="navbar-left">Bazar N.Sanity</div>
-
-        <div className="navbar-right desktop-only">
+        <div className="navbar-left">Bazar N.Sanity</div>        <div className="navbar-right desktop-only">
           <div className="navbar-fruits">
             <img src="/images/wumpa-fruit.png" alt="Fruta" className="fruit-icon" />
             {wumpaCount}
           </div>
-          <Link to="/" className="navbar-button">
-            Inicio
+          {!isHomePage && (
+            <Link to="/" className="navbar-button">
+              Inicio
+            </Link>
+          )}
+          <Link to="/store" className="navbar-button">
+            Tienda
           </Link>
           <div className="navbar-username">{username}</div>
         </div>
@@ -37,16 +44,19 @@ const Navbar: React.FC<Props> = ({ username }) => {
         <button className="menu-toggle mobile-only" onClick={() => setMenuOpen(!menuOpen)}>
           ☰
         </button>
-      </nav>
-
-      {menuOpen && (
+      </nav>      {menuOpen && (
         <div className="mobile-menu">
           <div className="mobile-item">
             <img src="/images/wumpa-fruit.png" alt="Fruta" className="fruit-icon" />
             {wumpaCount} frutas
           </div>
-          <Link to="/" className="mobile-item">
-            Inicio
+          {!isHomePage && (
+            <Link to="/" className="mobile-item">
+              Inicio
+            </Link>
+          )}
+          <Link to="/store" className="mobile-item">
+            Tienda
           </Link>
           <div className="mobile-item">👤 {username}</div>
         </div>
