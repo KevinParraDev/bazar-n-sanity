@@ -4,6 +4,7 @@ import IslandOfLostTreasures from './pages/IslandOfLostTreasures'
 // import WumpaIsland from './pages/WumpaIsland'
 // import CatchGame from './pages/CatchGame'
 import UnityGame from './pages/FruitCatchers';
+import CrashFlap from './pages/CrashFlap';
 import './App.css'
 import './FruitCatcher.css'
 import StorePage from './pages/StorePage';
@@ -14,6 +15,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/wumpa-island" element={<UnityGame />} />
       <Route path="/island-of-lost-treasures" element={<IslandOfLostTreasures/>} />
+      <Route path="/crashflap" element={<CrashFlap />} />
     </Routes>
   )
 }
