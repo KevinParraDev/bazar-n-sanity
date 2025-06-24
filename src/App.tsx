@@ -6,13 +6,14 @@ import IslandOfLostTreasures from './pages/IslandOfLostTreasures'
 import UnityGame from './pages/FruitCatchers';
 import './App.css'
 import './FruitCatcher.css'
+import StorePage from './pages/StorePage';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/wumpa-island" element={<UnityGame />} />
-      <Route path="/island-of-lost-treasures" element={<IslandOfLostTreasures />} />
+      <Route path="/island-of-lost-treasures" element={<IslandOfLostTreasures/>} />
     </Routes>
   )
 }

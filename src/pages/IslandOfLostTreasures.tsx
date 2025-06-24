@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
+
+import Navbar from '../components/Islands/Navbar';
+import StorePage from './StorePage';
 
 const IslandOfLostTreasures = () => {
   return (
     <div>
-      <h1>Island Of Lost Treasures</h1>
-      <nav>
-        <Link to="/">Home</Link> | <Link to="/wumpa-island">Explore Wumpa Island</Link>
-      </nav>
+      <Navbar username="Kevin" />
+      <StorePage></StorePage>
     </div>
   );
 };
