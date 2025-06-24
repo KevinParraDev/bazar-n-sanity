@@ -6,7 +6,7 @@ const BIRD_SIZE = 40;
 const PIPE_WIDTH = 60;
 const GROUND_HEIGHT = 100;
 const BASE_GRAVITY = 1.1;
-const JUMP_HEIGHT = 60;
+const JUMP_HEIGHT = 40;
 const BASE_PIPE_GAP = 180;
 const PIPE_GAP = 160; 
 
@@ -52,7 +52,7 @@ export function useGameLogic() {
           const birdCenter = 80 + BIRD_SIZE / 2;
           const pipeCenter = firstPipe.x + PIPE_WIDTH / 2;
           if (!firstPipe.scored && birdCenter >= pipeCenter) {
-            setScore(s => s + 1);
+            setScore(s => s + 2);
             newPipes[0] = { ...firstPipe, scored: true };
           }
         }
