@@ -8,7 +8,7 @@ const GROUND_HEIGHT = 100;
 const BASE_GRAVITY = 1.1;
 const JUMP_HEIGHT = 60;
 const BASE_PIPE_GAP = 180;
-const PIPE_GAP = 160; // Valor intermedio y fijo
+const PIPE_GAP = 160; 
 
 function getRandomGapY(pipeGap: number) {
   const min = 50;
@@ -95,7 +95,7 @@ export function useGameLogic() {
     return () => clearInterval(interval);
   }, [isGameOver, pipeGap, started, pipes, score]);
 
-  // Collision detection
+  
   useEffect(() => {
     if (!started) return;
     // Nueva condición: perder si sale por arriba o por abajo

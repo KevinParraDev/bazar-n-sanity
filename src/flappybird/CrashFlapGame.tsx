@@ -75,7 +75,7 @@ const CrashFlapGame = () => {
           />
         )
       )}
-      {/* Score y reliquias en español */}
+      {  /* Overlay para el score y reliquias */}
       <div style={{
         position: 'absolute',
         top: 60,
@@ -91,7 +91,7 @@ const CrashFlapGame = () => {
       </div>
       {isGameOver && (
         <>
-          {/* Fondo oscuro */}
+          { /* Overlay para el fin del juego */}
           <div style={{
             position: 'absolute',
             top: 0,

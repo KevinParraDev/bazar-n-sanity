@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import CrashFlapGame from '../flappybird/CrashFlapGame';
-import crashFlappyBg from '../assets/crash_flappy_loading_bg.png'; // importa tu imagen
+import crashFlappyBg from '../assets/crash_flappy_loading_bg.png';
 
 
 const GAME_WIDTH = 400;
