@@ -8,7 +8,6 @@ import minigameWumpa from '../assets/minigame-wumpa.png';
 import minigameLostTreasures from '../assets/minigame-lost-treasures.png';
 import { useState, useEffect } from 'react';
 import StorePage from '../components/Store/StorePage';
-import InventoryView from '../components/Islands/InventoryView';
 
 const islandsConfig = {
   'wumpa-island': {

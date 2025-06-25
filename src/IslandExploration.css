@@ -69,7 +69,6 @@ body {
   font-weight: bold;
   text-shadow: 3px 3px 6px #000;
   margin-bottom: 40px;
-  font-family: 'LuckiestGuy', sans-serif;
   letter-spacing: 3px;
 }
 
@@ -162,12 +161,10 @@ body {
 
 .minigame-button {
   border-radius: 25px;
-  font-size: 42px;
+  font-size: 70px;
   font-weight: bold;
-  padding: 35px 70px;
   cursor: pointer;
   text-shadow: 2px 2px 4px #000;
-  font-family: 'LuckiestGuy', sans-serif;
   letter-spacing: 1px;
   transition: all 0.3s ease;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);

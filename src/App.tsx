@@ -2,14 +2,11 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home'
 import IslandOfLostTreasures from './pages/IslandOfLostTreasures'
 import IslandExploration from './pages/IslandExploration'
-// import WumpaIsland from './pages/WumpaIsland'
-// import CatchGame from './pages/CatchGame'
 import UnityGame from './pages/FruitCatchers';
 import CrashFlap from './pages/CrashFlap';
-import './App.css'
-import './FruitCatcher.css'
-import InventoryView from './components/Islands/InventoryView';
 import Inventory from './pages/Inventory';
+import './App.css'
+
 
 function App() {
   return (
@@ -19,7 +16,7 @@ function App() {
       <Route path="/wumpa-island" element={<UnityGame />} />
       <Route path="/island-of-lost-treasures" element={<IslandOfLostTreasures/>} />
       <Route path="/crashflap" element={<CrashFlap />} />
-      <Route path="/store" element={<Inventory />} />
+      <Route path="/inventory" element={<Inventory />} />
     </Routes>
   )
 }

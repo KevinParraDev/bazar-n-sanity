@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Navbar from "../components/Islands/Navbar";
 import { useEconomy } from "../context/EconomyContext";
 import { Link } from "react-router-dom";
+import '../FruitCatcher.css'
 
 const UnityGame: React.FC = () => {
   const [score,setScore] = useState(0);

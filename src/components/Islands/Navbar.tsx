@@ -12,9 +12,10 @@ const Navbar: React.FC<Props> = ({ username }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { wumpaCount, gemCount } = useEconomy();
   const location = useLocation();
-  
+
   // Verificar si estamos en la página de inicio
   const isHomePage = location.pathname === '/';
+  const isInventaryPage = location.pathname === '/inventory';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -39,9 +40,11 @@ const Navbar: React.FC<Props> = ({ username }) => {
               Inicio
             </Link>
           )}
-          <Link to="/store" className="navbar-button">
-            Inventario
-          </Link>
+          {!isInventaryPage && (
+            <Link to="/inventory" className="navbar-button">
+              Inventario
+            </Link>
+          )}
           <div className="navbar-username">{username}</div>
         </div>
 
@@ -59,7 +62,7 @@ const Navbar: React.FC<Props> = ({ username }) => {
               Inicio
             </Link>
           )}
-          <Link to="/store" className="mobile-item">
+          <Link to="/inventory" className="mobile-item">
             Tienda
           </Link>
           <div className="mobile-item">👤 {username}</div>

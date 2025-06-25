@@ -9,7 +9,7 @@ const Inventory = () => {
       style={{ backgroundImage: bgWumpaIsland }}
     >
       <Navbar username="Kevin" />      {/* Botón principal */}
-      <h1 style={{paddingTop: '100px', paddingBottom: '30px'}}>Inventory</h1>
+      <h1 style={{paddingTop: '100px', paddingBottom: '30px'}}>Inventario</h1>
       <InventoryView />
     </div>
   );
