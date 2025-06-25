@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import type { Product } from "./products";
 import "./ProductModal.css";
 import { useEconomy } from "../../context/EconomyContext";
+import { useInventory } from "../../context/InventoryContext";
 
 interface Props {
   product: Product;
@@ -12,6 +13,7 @@ interface Props {
 const ProductModal: React.FC<Props> = ({ product, onClose }) => {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const { spendCurrency } = useEconomy();
+  const { addToInventory } = useInventory();
   const currencyIcons = {
     wumpa: "/images/wumpa-fruit.png",
     gem: "/images/purple-crystal.webp",
@@ -21,6 +23,7 @@ const ProductModal: React.FC<Props> = ({ product, onClose }) => {
   const handleBuy = () => {
     const success = spendCurrency(product.currency, product.price);
     if (success) {
+      addToInventory(product)
       alert("¡Compra exitosa!");
     } else {
       alert("¡No tienes suficientes frutas Wumpa!");

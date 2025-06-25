@@ -8,7 +8,8 @@ import UnityGame from './pages/FruitCatchers';
 import CrashFlap from './pages/CrashFlap';
 import './App.css'
 import './FruitCatcher.css'
-import StorePage from './pages/StorePage';
+import InventoryView from './components/Islands/InventoryView';
+import Inventory from './pages/Inventory';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
       <Route path="/wumpa-island" element={<UnityGame />} />
       <Route path="/island-of-lost-treasures" element={<IslandOfLostTreasures/>} />
       <Route path="/crashflap" element={<CrashFlap />} />
-      <Route path="/store" element={<StorePage />} />
+      <Route path="/store" element={<Inventory />} />
     </Routes>
   )
 }

@@ -4,13 +4,16 @@ import './index.css'
 import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { EconomyProvider } from './context/EconomyContext.tsx'
+import { InventoryProvider } from './context/InventoryContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <EconomyProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <InventoryProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </InventoryProvider>
     </EconomyProvider>
   </StrictMode>,
 )

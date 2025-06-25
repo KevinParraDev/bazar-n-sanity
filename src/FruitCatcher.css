@@ -7,12 +7,18 @@
   height: 100vh;
   background-color: #000;
 }
-.minigame-button{
+.unity-game-container{
+  width: 100%;
+  max-width: 100vh;
+  aspect-ratio: 960 / 600;
+  max-height: 100%;
+}
+.minigame-fruitCatcher-button{
   padding-inline: 10px;
   font-size:x-large;
-  margin-inline: 10px;
+  margin: 10px;
 }
-.minigame-button:hover {
+.minigame-fruitCatcher-button:hover {
   color: white;
   font-size:x-large;
 }

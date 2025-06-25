@@ -61,6 +61,7 @@ const ProductCard: React.FC<Props> = ({ product, onBuy }) => {
             onClick={(e) => {
               e.stopPropagation(); // Para que no gire al hacer clic en el botón
               onBuy(product);
+              setFlipped(false);
             }}
           >
             Comprar

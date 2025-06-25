@@ -40,7 +40,7 @@ const Navbar: React.FC<Props> = ({ username }) => {
             </Link>
           )}
           <Link to="/store" className="navbar-button">
-            Tienda
+            Inventario
           </Link>
           <div className="navbar-username">{username}</div>
         </div>

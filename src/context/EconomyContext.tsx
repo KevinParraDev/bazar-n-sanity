@@ -15,8 +15,8 @@ interface EconomyContextType {
 const EconomyContext = createContext<EconomyContextType | undefined>(undefined);
 
 export const EconomyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [wumpaCount, setWumpaCount] = useState(0);
-  const [gemCount, setGemCount] = useState(0);
+  const [wumpaCount, setWumpaCount] = useState(300);
+  const [gemCount, setGemCount] = useState(5);
   const [goldenCount, setGoldenCount] = useState(0);
 
   const addCurrency = (type: CurrencyType, amount: number) => {

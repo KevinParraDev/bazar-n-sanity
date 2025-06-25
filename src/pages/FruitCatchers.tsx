@@ -43,7 +43,7 @@ const UnityGame: React.FC = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         backgroundColor: '#1f202d',
         padding: "1rem",
@@ -55,14 +55,7 @@ const UnityGame: React.FC = () => {
       <h1 style={{ color: "#ffe6d7", marginBottom: "1rem" }}>Fruit Catchers</h1>
 
       {/* Contenedor del juego */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "960px",
-          aspectRatio: "960 / 600",
-          maxHeight: "100%",
-        }}
-      >
+      <div className="unity-game-container">
         <iframe
           ref={iframeRef}
           src="/game/index.html"
@@ -82,7 +75,7 @@ const UnityGame: React.FC = () => {
         <p className="points">Puntaje obtenido: <strong>{score}</strong></p>
         <Link to="/">
           <button
-            className="minigame-button"
+            className="minigame-fruitCatcher-button"
           >
             Volver a Inicio
           </button>
@@ -90,7 +83,7 @@ const UnityGame: React.FC = () => {
         
         <button
           onClick={handleUnityFullscreen}
-          className="minigame-button"
+          className="minigame-fruitCatcher-button"
         >
           Pantalla Completa
         </button>
