@@ -1,11 +1,10 @@
-/* src/components/Keyboard.css */
-
 .keyboard {
+  flex-wrap: wrap;
+  justify-content: center;
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 20px;
-  align-items: center;
+  gap: 5px;
+  padding: 1rem 0;
+  transform: scale(0.95);
 }
 
 .key-row {
@@ -57,4 +56,6 @@
   background-color: #787c7e;
   color: white;
 }
+
+
 
