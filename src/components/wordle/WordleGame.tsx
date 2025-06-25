@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { getRandomWord, evaluateGuess } from "./utils/word-utils";
-import { GameBoard } from "./components/GameBoard";
-import { Keyboard } from "./components/Keyboard";
-import "./index.css";
-import wumpaImg from './assets/images/time_relic_crash.webp';
+import { useEffect, useState } from "react";
+import { getRandomWord, evaluateGuess } from "../../utils/word-utils";
+import { GameBoard } from "./GameBoard";
+import { Keyboard } from "./Keyboard";
+import "../../styles/wordle.css";
+import wumpaImg from "../../assets/time_relic_crash.webp";
 
 
-
-function App() {
-  const [solution, setSolution] = useState(""); //Solucion / Palabra elegida
-  const [guesses, setGuesses] = useState<string[]>([]); //Intento del usuario
-  const [evaluations, setEvaluations] = useState<("correct" | "present" | "absent")[][]>([]); //Evaluacion del intento
-  const [currentGuess, setCurrentGuess] = useState(""); //Intento Actual
-  const [gameOver, setGameOver] = useState(false); //Termina el juego
+export default function WordleGame() {
+  const [solution, setSolution] = useState(""); //La palabra correcta
+  const [guesses, setGuesses] = useState<string[]>([]); //Evaluacion del intento
+  const [evaluations, setEvaluations] = useState<("correct" | "present" | "absent")[][]>([]); //Estado del intento correcto, presente o ausente
+  const [currentGuess, setCurrentGuess] = useState(""); //Intento actual
+  const [gameOver, setGameOver] = useState(false); 
   const [alertMessage, setAlertMessage] = useState("");
-  const [relic, setRelic] = useState(0); //Usestate para guardar la recompensa
-  const [timeLeft, setTimeLeft] = useState(90); //Temporizador
-  const [showRules, setShowRules] = useState(false); //Reglas
-  const [hasStarted, setHasStarted] = useState(false); //Empezar apenas evalue la primera palabra
-  const [letterStatuses, setLetterStatuses] = useState<Record<string, "correct" | "present" | "absent" | undefined>>({}); //Actualizacion del teclado virtual
+  const [relic, setRelic] = useState(0); //useState para las reliquias se guarden
+  const [timeLeft, setTimeLeft] = useState(90); //temporizador
+  const [showRules, setShowRules] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [letterStatuses, setLetterStatuses] = useState<Record<string, "correct" | "present" | "absent" | undefined>>({});//actualiza teclado virtual
 
   useEffect(() => {
     setSolution(getRandomWord());
@@ -31,7 +30,7 @@ function App() {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          setGameOver(true); //Termina el juego
+          setGameOver(true);
           alert("⏰ Se acabó el tiempo. Perdiste.");
           return 0;
         }
@@ -47,14 +46,14 @@ function App() {
     setTimeout(() => setAlertMessage(""), 2000);
   };
 
-  const calcularRelic = (intentos: number) => { //Calculo de la reliquia
+  const calcularRelic = (intentos: number) => {
     switch (intentos) {
-      case 1: return 50;
-      case 2: return 40;
-      case 3: return 30;
-      case 4: return 20;
-      case 5: return 10;
-      case 6: return 5;
+      case 1: return 10;
+      case 2: return 5;
+      case 3: return 4;
+      case 4: return 3;
+      case 5: return 2;
+      case 6: return 1;
       default: return 0;
     }
   };
@@ -74,12 +73,11 @@ function App() {
 
       if (!hasStarted) setHasStarted(true);
 
-      const evaluation = evaluateGuess(currentGuess, solution); //evalua si la letra esta ausente, presente o correcta
-      const newGuesses = [...guesses, currentGuess]; //intento
-      const newEvaluations = [...evaluations, evaluation]; //anteriores evaluaciones
+      const evaluation = evaluateGuess(currentGuess, solution); //evalua el intento
+      const newGuesses = [...guesses, currentGuess];
+      const newEvaluations = [...evaluations, evaluation]; //nueva evaluacion al nuevo intento
 
-      // Actualizar teclas del teclado virtual
-      const newLetterStatuses = { ...letterStatuses };
+      const newLetterStatuses = { ...letterStatuses }; //actualiza las letras del teclado
       currentGuess.split("").forEach((letter, i) => {
         const newStatus = evaluation[i];
         const currentStatus = newLetterStatuses[letter];
@@ -100,11 +98,11 @@ function App() {
       if (currentGuess === solution || newGuesses.length >= 6) {
         setGameOver(true);
 
-        if (currentGuess === solution) {
+        if (currentGuess === solution) { //si el intento actual es la misma palabra que la solucion
           const relicGanadas = calcularRelic(newGuesses.length);
           setRelic(prev => prev + relicGanadas);
           setTimeout(() =>
-            alert(`🎉 ¡Ganaste! Has ganado ${relicGanadas}  reliquias`), 100);
+            alert(`🎉 ¡Ganaste! Has ganado ${relicGanadas} reliquias`), 100);
         }
       }
     } else if (key === "⌫") {
@@ -124,20 +122,18 @@ function App() {
 
   const fullGuesses = [...guesses];
   if (fullGuesses.length < 6) {
-    fullGuesses.push(currentGuess);
+    fullGuesses.push(currentGuess); //guarda el intento actual si todos los intentos la longitud del arreglo es menor a 6
   }
 
   return (
-    <div className="App">
+    <div className="App wordle-root">
       <div className="layout">
-        <div className="sidebar">
-          <button onClick={() => setShowRules(true)}>ℹ️ Ver Reglas</button>
+        <div className="sidebar"> 
+          <button onClick={() => setShowRules(true)}>ℹ️ Ver Reglas</button> 
           <h2>
             <img src={wumpaImg} alt="Reliquia" className="wumpa-icon" />
             Reliquias: {relic}
           </h2>
-
-
           <h3>🕒 Tiempo restante: {timeLeft}</h3>
         </div>
 
@@ -148,7 +144,7 @@ function App() {
         </div>
       </div>
 
-      {showAlert && alertMessage && (
+      {alertMessage && (
         <div className="alert">{alertMessage}</div>
       )}
 
@@ -179,5 +175,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
