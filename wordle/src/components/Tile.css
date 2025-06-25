@@ -6,11 +6,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #ccc;
+  border: none;
+  border-radius: 12px;
   font-size: 1.5rem;
   font-weight: bold;
   text-transform: uppercase;
-  background-color: white;
+  background-color: black;
   transition: background-color 0.3s ease;
 }
 
