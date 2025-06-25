@@ -1,0 +1,63 @@
+.ruleta-container {
+  text-align: center;
+  color: white;
+  padding: 2rem 1rem;
+  background-color: #111;
+}
+
+.ruleta-wrapper {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 2rem auto;
+}
+
+.ruleta {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 10px solid gold;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #444, #111);
+}
+
+.opcion {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  transform-origin: center bottom;
+  text-align: center;
+}
+
+.opcion img {
+  width: 48px;
+  height: 48px;
+}
+
+.puntero {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  color: red;
+}
+
+.boton-girar {
+  background-color: orange;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.resultado {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: yellow;
+}
