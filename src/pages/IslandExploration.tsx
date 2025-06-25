@@ -6,6 +6,7 @@ import bgIslandOfLostTreasures from '../assets/background_island_of_lost_treasur
 import minigameWumpa from '../assets/minigame-wumpa.png';
 import minigameLostTreasures from '../assets/minigame-lost-treasures.png';
 import { useState, useEffect } from 'react';
+import StorePage from './StorePage';
 
 // Configuración de las islas
 const islandsConfig = {
@@ -20,7 +21,7 @@ const islandsConfig = {
         route: '/wumpa-island'
       }
     ]
-  },  'lost-treasures': {
+  }, 'lost-treasures': {
     name: 'ISLA DE TESOROS PERDIDOS',
     backgroundImage: bgIslandOfLostTreasures,
     minigameBackground: minigameLostTreasures,
@@ -37,7 +38,7 @@ const islandsConfig = {
 const IslandExploration = () => {
   const { islandId } = useParams<{ islandId: string }>();
   const navigate = useNavigate();
-  
+
   // Estado para detectar si estamos en móvil
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isTablet, setIsTablet] = useState(window.innerWidth <= 1024 && window.innerWidth > 768);
@@ -56,13 +57,14 @@ const IslandExploration = () => {
 
   if (!island) {
     return (
-      <div style={{ 
-        height: '100vh', 
-        display: 'flex', 
-        alignItems: 'center', 
+      <div style={{
+        height: '100vh',
+        display: 'flex',
+        alignItems: 'center',
         justifyContent: 'center',
         color: '#fff',
-        background: '#000'      }}>
+        background: '#000'
+      }}>
         Isla no encontrada
       </div>
     );
@@ -113,56 +115,47 @@ const IslandExploration = () => {
           }}>
             {island.name}
           </h1>
-        </div>        {/* Área del bazar integrada en la misma sección */}
+        </div>
+        {/* Área del bazar integrada en la misma sección */}
         <div style={{
           position: 'relative',
           zIndex: 2,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          padding: isMobile ? '40px 20px 60px' : isTablet ? '50px 30px 70px' : '60px 40px 80px',
-          minHeight: isMobile ? '40vh' : '50vh'
+          padding: '60px 40px 80px',
+          minHeight: '50vh'
         }}>
           {/* Título del Bazar */}
           <h2 style={{
             color: '#fff',
-            fontSize: isMobile ? '32px' : isTablet ? '40px' : '48px',
+            fontSize: '48px',
             fontWeight: 'bold',
             textShadow: '3px 3px 6px #000',
-            marginBottom: isMobile ? '25px' : '40px',
+            marginBottom: '40px',
             fontFamily: 'LuckiestGuy, sans-serif',
-            letterSpacing: isMobile ? '2px' : '3px'
+            letterSpacing: '3px'
           }}>
             BAZAR
           </h2>
-          
+
           {/* Área del bazar */}
           <div style={{
-            maxWidth: isMobile ? '90%' : isTablet ? '700px' : '1000px',
+            maxWidth: '1200px',
             width: '100%',
-            minHeight: isMobile ? '200px' : '300px',
-            border: isMobile ? '2px dashed rgba(255, 255, 255, 0.5)' : '3px dashed rgba(255, 255, 255, 0.5)',
-            borderRadius: isMobile ? '15px' : '20px',
+            minHeight: '300px',
+            borderRadius: '20px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             background: 'rgba(255, 255, 255, 0.1)',
             backdropFilter: 'blur(10px)',
-            padding: isMobile ? '20px' : '30px'
           }}>
-            <p style={{
-              color: 'rgba(255, 255, 255, 0.9)',
-              fontSize: isMobile ? '18px' : '24px',
-              fontStyle: 'italic',
-              textShadow: '2px 2px 4px #000',
-              textAlign: 'center',
-              lineHeight: '1.5'
-            }}>
-              Próximamente... Objetos del bazar
-            </p>
+            <StorePage></StorePage>
           </div>
         </div>
-      </section>      {/* Sección de transición suave con fade azul noche */}
+      </section>
+
       <section style={{
         minHeight: isMobile ? '20vh' : '30vh',
         background: `linear-gradient(to bottom, 
@@ -219,61 +212,61 @@ const IslandExploration = () => {
             alignItems: 'center',
             width: isMobile ? '100%' : 'auto'
           }}>{island.minigames.map((minigame) => (
-              <div
-                key={minigame.id}                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: isMobile ? '40px' : '60px'
-                }}
-              >                {/* Título principal del minijuego centrado */}
-                <h2 style={{
-                  color: '#fff',
-                  fontSize: isMobile ? '32px' : isTablet ? '40px' : '48px',
-                  fontWeight: 'bold',
-                  textShadow: '3px 3px 6px #000',
-                  margin: 0,
-                  fontFamily: 'LuckiestGuy, sans-serif',
-                  letterSpacing: isMobile ? '2px' : '3px',
-                  textAlign: 'center'
-                }}>
-                  {minigame.name}
-                </h2>
+            <div
+              key={minigame.id} style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: isMobile ? '40px' : '60px'
+              }}
+            >                {/* Título principal del minijuego centrado */}
+              <h2 style={{
+                color: '#fff',
+                fontSize: isMobile ? '32px' : isTablet ? '40px' : '48px',
+                fontWeight: 'bold',
+                textShadow: '3px 3px 6px #000',
+                margin: 0,
+                fontFamily: 'LuckiestGuy, sans-serif',
+                letterSpacing: isMobile ? '2px' : '3px',
+                textAlign: 'center'
+              }}>
+                {minigame.name}
+              </h2>
 
-                {/* Botón grande */}
-                <button
-                  onClick={() => navigate(minigame.route)}
-                  style={{
-                    background: '#ff6b35',
-                    border: isMobile ? '4px solid #fff' : '5px solid #fff',
-                    borderRadius: isMobile ? '20px' : '25px',
-                    color: '#fff',
-                    fontSize: isMobile ? '28px' : isTablet ? '36px' : '42px',
-                    fontWeight: 'bold',
-                    padding: isMobile ? '25px 50px' : isTablet ? '30px 60px' : '35px 70px',
-                    cursor: 'pointer',
-                    textShadow: '2px 2px 4px #000',
-                    fontFamily: 'LuckiestGuy, sans-serif',
-                    letterSpacing: '1px',
-                    transition: 'all 0.3s ease',
-                    boxShadow: '0 6px 20px rgba(0, 0, 0, 0.4)',
-                    minWidth: isMobile ? '200px' : '250px'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.background = '#e55a2b';
-                    e.currentTarget.style.transform = 'scale(1.05)';
-                    e.currentTarget.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.5)';
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.background = '#ff6b35';
-                    e.currentTarget.style.transform = 'scale(1)';
-                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.4)';
-                  }}
-                >
-                  JUGAR
-                </button>
-              </div>
-            ))}
+              {/* Botón grande */}
+              <button
+                onClick={() => navigate(minigame.route)}
+                style={{
+                  background: '#ff6b35',
+                  border: isMobile ? '4px solid #fff' : '5px solid #fff',
+                  borderRadius: isMobile ? '20px' : '25px',
+                  color: '#fff',
+                  fontSize: isMobile ? '28px' : isTablet ? '36px' : '42px',
+                  fontWeight: 'bold',
+                  padding: isMobile ? '25px 50px' : isTablet ? '30px 60px' : '35px 70px',
+                  cursor: 'pointer',
+                  textShadow: '2px 2px 4px #000',
+                  fontFamily: 'LuckiestGuy, sans-serif',
+                  letterSpacing: '1px',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 6px 20px rgba(0, 0, 0, 0.4)',
+                  minWidth: isMobile ? '200px' : '250px'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = '#e55a2b';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.5)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = '#ff6b35';
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.4)';
+                }}
+              >
+                JUGAR
+              </button>
+            </div>
+          ))}
           </div>
         </div>
       </section>      {/* Fade debajo de la sección de minijuegos */}

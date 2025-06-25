@@ -113,3 +113,11 @@
 .buy-button:hover {
   background-color: green;
 }
+
+.modal-price{
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  display:inline-flex;
+  font-size: 30px;
+}

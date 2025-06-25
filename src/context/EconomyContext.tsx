@@ -1,41 +1,69 @@
-import React, { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import React, { createContext, useContext, useState, type ReactNode } from "react";
+
+export type CurrencyType = "wumpa" | "gem" | "golden";
 
 interface EconomyContextType {
   wumpaCount: number;
-  addWumpa: (amount: number) => void;
-  spendWumpa: (amount: number) => boolean;
-  resetWumpas: () => void;
+  gemCount: number;
+  goldenCount: number;
+  addCurrency: (type: CurrencyType, amount: number) => void;
+  spendCurrency: (type: CurrencyType, amount: number) => boolean;
+  setCurrency: (type: CurrencyType, amount: number) => void;
+  getCurrency: (type: CurrencyType) => number;
 }
 
 const EconomyContext = createContext<EconomyContextType | undefined>(undefined);
 
 export const EconomyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Inicializar desde localStorage o 0 si no existe
-  const [wumpaCount, setWumpaCount] = useState(() => {
-    const saved = localStorage.getItem('wumpaCount');
-    return saved ? parseInt(saved, 10) : 0;
-  });
+  const [wumpaCount, setWumpaCount] = useState(0);
+  const [gemCount, setGemCount] = useState(0);
+  const [goldenCount, setGoldenCount] = useState(0);
 
-  // Guardar en localStorage cada vez que cambie el contador
-  useEffect(() => {
-    localStorage.setItem('wumpaCount', wumpaCount.toString());
-  }, [wumpaCount]);
-
-  const addWumpa = (amount: number) => {
-    setWumpaCount((prev) => prev + amount);
-  };
-  const spendWumpa = (amount: number): boolean => {
-    if (amount > wumpaCount) return false;
-    setWumpaCount((prev) => prev - amount);
-    return true;
+  const addCurrency = (type: CurrencyType, amount: number) => {
+    if (type === "wumpa") setWumpaCount(prev => prev + amount);
+    else if (type === "gem") setGemCount(prev => prev + amount);
+    else if (type === "golden") setGoldenCount(prev => prev + amount);
   };
 
-  const resetWumpas = () => {
-    setWumpaCount(0);
+  const spendCurrency = (type: CurrencyType, amount: number): boolean => {
+    if (type === "wumpa" && wumpaCount >= amount) {
+      setWumpaCount(prev => prev - amount);
+      return true;
+    } else if (type === "gem" && gemCount >= amount) {
+      setGemCount(prev => prev - amount);
+      return true;
+    } else if (type === "golden" && goldenCount >= amount) {
+      setGoldenCount(prev => prev - amount);
+      return true;
+    }
+    return false;
+  };
+
+  const setCurrency = (type: CurrencyType, amount: number) => {
+    if (type === "wumpa") setWumpaCount(amount);
+    else if (type === "gem") setGemCount(amount);
+    else if (type === "golden") setGoldenCount(amount);
+  };
+
+  const getCurrency = (type: CurrencyType): number => {
+    if (type === "wumpa") return wumpaCount;
+    else if (type === "gem") return gemCount;
+    else if (type === "golden") return goldenCount;
+    return 0;
   };
 
   return (
-    <EconomyContext.Provider value={{ wumpaCount, addWumpa, spendWumpa, resetWumpas }}>
+    <EconomyContext.Provider
+      value={{
+        wumpaCount,
+        gemCount,
+        goldenCount,
+        addCurrency,
+        spendCurrency,
+        setCurrency,
+        getCurrency,
+      }}
+    >
       {children}
     </EconomyContext.Provider>
   );

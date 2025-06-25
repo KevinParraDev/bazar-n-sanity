@@ -1,35 +1,38 @@
-import React, { useState } from "react";
-import type { Product } from "./types";
+import React from "react";
+import type { Product } from "./products";
 import ProductCard from "./ProductCard";
-import ProductModal from "./ProductModal";
 import "./StoreGrid.css";
+import { useEconomy } from "../../context/EconomyContext";
 
 interface Props {
   products: Product[];
 }
 
 const StoreGrid: React.FC<Props> = ({ products }) => {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const { getCurrency, spendCurrency } = useEconomy();
+
+  const handleBuy = (product: Product) => {
+    const balance = getCurrency(product.currency);
+
+    if (balance < product.price) {
+      alert("No tienes suficientes " + product.currency);
+      return;
+    }
+
+    spendCurrency(product.currency, product.price);
+    alert("¡Has comprado " + product.name + "!");
+  };
 
   return (
-    <>
-      <div className="store-grid">
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onClick={setSelectedProduct}
-          />
-        ))}
-      </div>
-
-      {selectedProduct && (
-        <ProductModal
-          product={selectedProduct}
-          onClose={() => setSelectedProduct(null)}
+    <div className="store-grid">
+      {products.map((product, index) => (
+        <ProductCard
+          key={`${product.id}-${index}`}
+          product={product}
+          onBuy={handleBuy}
         />
-      )}
-    </>
+      ))}
+    </div>
   );
 };
 

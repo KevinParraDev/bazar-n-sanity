@@ -1,8 +1,21 @@
 .store-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(2, 1fr); /* 2 por fila en móviles */
   gap: 16px;
   padding: 16px;
-  padding-inline: 20%;
   margin: 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .store-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas en tablet */
+  }
+}
+
+@media (min-width: 1024px) {
+  .store-grid {
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas en desktop */
+    max-width: 960px; /* opcional para centrar */
+  }
 }

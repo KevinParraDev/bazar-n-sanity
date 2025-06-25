@@ -10,7 +10,7 @@ interface Props {
 const Navbar: React.FC<Props> = ({ username }) => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { wumpaCount } = useEconomy();
+  const { wumpaCount, gemCount } = useEconomy();
   const location = useLocation();
   
   // Verificar si estamos en la página de inicio
@@ -29,6 +29,10 @@ const Navbar: React.FC<Props> = ({ username }) => {
           <div className="navbar-fruits">
             <img src="/images/wumpa-fruit.png" alt="Fruta" className="fruit-icon" />
             {wumpaCount}
+          </div>
+          <div className="navbar-fruits">
+            <img src="/images/purple-crystal.webp" alt="Fruta" className="fruit-icon" />
+            {gemCount}
           </div>
           {!isHomePage && (
             <Link to="/" className="navbar-button">

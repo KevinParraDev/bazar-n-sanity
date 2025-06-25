@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import bgWumpaIsland from '../assets/background_wumpa_island.png'
 import Navbar from "../components/Islands/Navbar";
 import { useEconomy } from "../context/EconomyContext";
 import { Link } from "react-router-dom";
 
 const UnityGame: React.FC = () => {
   const [score,setScore] = useState(0);
-  const { addWumpa } = useEconomy();
-  const { wumpaCount } = useEconomy();
+  const { addCurrency } = useEconomy();
 
   // Pantalla completa
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -28,7 +26,8 @@ const UnityGame: React.FC = () => {
     const handleMessage = (event: MessageEvent) => {
       console.log(event.data);
       if (event.data?.type === 'UPDATE_POINTS') {
-        addWumpa(1);
+        addCurrency("wumpa", event.data.points);
+        addCurrency("gem", event.data.gems);
         setScore(event.data.points)
       }
     };

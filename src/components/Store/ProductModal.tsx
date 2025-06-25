@@ -1,6 +1,6 @@
 // ProductModal.tsx
 import React, { useState } from "react";
-import type { Product } from "./types";
+import type { Product } from "./products";
 import "./ProductModal.css";
 import { useEconomy } from "../../context/EconomyContext";
 
@@ -11,10 +11,15 @@ interface Props {
 
 const ProductModal: React.FC<Props> = ({ product, onClose }) => {
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
-  const { spendWumpa } = useEconomy();
+  const { spendCurrency } = useEconomy();
+  const currencyIcons = {
+    wumpa: "/images/wumpa-fruit.png",
+    gem: "/images/purple-crystal.webp",
+    golden: "/icons/golden-fruit.png",
+  };
 
   const handleBuy = () => {
-    const success = spendWumpa(product.price);
+    const success = spendCurrency(product.currency, product.price);
     if (success) {
       alert("¡Compra exitosa!");
     } else {
@@ -34,22 +39,26 @@ const ProductModal: React.FC<Props> = ({ product, onClose }) => {
           />
           <div className="modal-info">
             <h2 className="product-name">{product.name}</h2>
-            <p className="modal-price">💰 {product.price}</p>
-
-            <div className="color-selector">
-              <p>Color:</p>
-              <div className="color-options">
-                {product.colors.map((color) => (
-                  <button
-                    key={color.name}
-                    className={`color-button ${selectedColor.name === color.name ? "selected" : ""}`}
-                    onClick={() => setSelectedColor(color)}
-                  >
-                    {color.name}
-                  </button>
-                ))}
-              </div>
+            <div className="modal-price">
+              <img src={currencyIcons[product.currency]} alt="Fruta" className="fruit-icon" />
+              <h2>{product.price}</h2>
             </div>
+            {product.colors.length > 1 && (
+              <div className="color-selector">
+                <p>Color:</p>
+                <div className="color-options">
+                  {product.colors.map((color) => (
+                    <button
+                      key={color.name}
+                      className={`color-button ${selectedColor.name === color.name ? "selected" : ""}`}
+                      onClick={() => setSelectedColor(color)}
+                    >
+                      {color.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <button className="buy-button" onClick={handleBuy}>Comprar</button>
           </div>
