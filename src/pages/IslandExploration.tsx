@@ -9,6 +9,7 @@ import minigameLostTreasures from '../assets/minigame-lost-treasures.png';
 import { useState, useEffect } from 'react';
 import StorePage from '../components/Store/StorePage';
 import WordleGame from '../components/wordle/WordleGame';
+import Ruleta from '../components/Ruleta';
 
 
 const islandsConfig = {
@@ -81,6 +82,17 @@ const IslandExploration = () => {
             <StorePage />
           </div>
         </div>
+        {islandId === 'wumpa-island' && (
+          <section className="roulette-section">
+            <h2 className="roulette-title">MINIJUEGO – RULETA</h2>
+                
+            <div className="roulette-full">
+              <Ruleta />
+            </div>
+          </section>
+        )}
+
+
       <section
         className="minigame-section"
         style={{ background: `url(${island.minigameBackground}) center center / cover no-repeat` }}

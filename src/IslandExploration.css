@@ -236,3 +236,23 @@ zzbody {
   color: #fff;
   background: #000;
 }
+.roulette-section {
+  background: linear-gradient(to bottom, #03001e, #0f0c29);
+  padding: 4rem 2rem;
+  color: white;
+  text-align: center;
+}
+
+.roulette-title {
+  font-size: 2rem;
+  font-family: 'Crash CT', sans-serif;
+  margin-bottom: 3rem;
+  text-shadow: 2px 2px 4px black;
+}
+
+.roulette-full {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
