@@ -1,0 +1,73 @@
+.auth {
+  font-family: 'LuckiestGuy', sans-serif;
+  background: url(../../assets/background_wumpa_island.png);
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #140c34;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #764ba2;
+}
+
+/* Botones */
+.auth-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #261f44;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.auth-button:hover {
+  background-color: #5e3a99;
+}
+
+/* Botón de cambiar vista */
+.switch-button {
+  margin-top: 1rem;
+  background-color: transparent;
+  color: #63606b;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.switch-button:hover {
+  color: #444444;
+}
+
+.auth h2 {
+    padding-bottom: 15px;
+}

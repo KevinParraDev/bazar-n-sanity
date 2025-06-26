@@ -1,0 +1,251 @@
+.wheel-modal-backdrop {
+  position: fixed;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.wheel-image {
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  border-radius: 50%;
+  transition: transform 4s cubic-bezier(0.1, 0.8, 0.2, 1); /* suave y realista */
+}
+
+.wheel {
+  width: 150px;
+  height: 150px;
+  margin: 20px auto;
+  background-image: url('/icons/wheel-base.png');
+  background-size: cover;
+  transition: transform 3s ease-out;
+}
+
+.spinning {
+  transform: rotate(1440deg); /* 4 vueltas */
+}
+
+.button-wheel {
+  background: linear-gradient(135deg, #4caf50, #45a049);
+  border: 2px solid white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.button-wheel:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5cbf60, #4caf50);
+  transform: scale(1.05);
+}
+
+.button-wheel:disabled {
+  background: linear-gradient(135deg, #666, #555);
+  color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.7;
+}
+
+.button-wheel.disabled {
+  background: linear-gradient(135deg, #d32f2f, #b71c1c);
+  color: #ffcdd2;
+  cursor: not-allowed;
+  opacity: 0.8;
+  border-color: #d32f2f;
+}
+
+.wheel-result {
+  margin-top: 16px;
+  font-size: 18px;
+}
+
+.wheel-wrapper {
+  position: relative;
+  max-width: 400px;
+  max-width: 400px;
+  margin: 0 auto 20px;
+}
+
+.wheel-image {
+  width: 100%;
+  height: 100%;
+  transition: transform 4s ease-out;
+  transform-origin: center center;
+  border-radius: 50%;
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40px;
+  color: #1e0c03;
+  text-shadow: 1px 1px 2px #000;
+}
+
+.wheel-modal h2{
+    font-size: x-large;
+    color: #ffffff;
+    text-shadow: 10px 10px 20px black;
+}
+
+/* Header del modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: x-large;
+  color: #ffffff;
+  text-shadow: 10px 10px 20px black;
+}
+
+.close-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.close-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.1);
+}
+
+/* Información de reliquias */
+.wheel-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 215, 0, 0.5);
+}
+
+.wheel-cost,
+.player-relics {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.cost-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.player-relics {
+  color: #ffd700;
+}
+
+/* Notificación del modal */
+.wheel-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  z-index: 1001;
+  animation: slideIn 0.3s ease-out;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  max-width: 250px;
+  text-align: center;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .wheel-modal {
+    max-width: 320px;
+    padding: 1rem;
+  }
+  
+  .modal-header h2 {
+    font-size: large;
+  }
+  
+  .close-button {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  .wheel-info {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .wheel-wrapper {
+    max-width: 280px;
+  }
+  
+  .button-wheel {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .wheel-notification {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+    font-size: 0.8rem;
+  }
+  
+  .cost-icon {
+    width: 18px;
+    height: 18px;
+  }
+}

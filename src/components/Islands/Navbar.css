@@ -1,0 +1,140 @@
+/* General navbar styles */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 100px;
+  z-index: 999;
+  transition: background-color 0.3s ease;
+  background-color: transparent;
+  font-size: 24px;
+}
+
+.navbar-scrolled {
+  background-color: rgba(10, 20, 60, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+.navbar-left {
+  font-weight: bold;
+  color: white;
+}
+
+/* Desktop right content */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-fruits {
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  gap: 6px;
+}
+
+.fruit-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.navbar-button {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0px 12px;
+  border: 1px solid white;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.navbar-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.navbar-username {
+  color: white;
+  font-weight: 500;
+}
+
+/* Menu toggle for mobile */
+.menu-toggle {
+  font-size: 26px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Mobile-only styles */
+.mobile-only {
+  display: none;
+}
+
+.desktop-only {
+  display: flex;
+}
+
+@media (max-width: 640px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  .navbar-left {
+    color: transparent;
+  }
+}
+
+/* Mobile menu dropdown */
+.mobile-menu {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  left: 0;
+  background-color: rgba(10, 20, 60, 0.95);
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 998;
+  color: white;
+}
+
+.mobile-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+/* Estilos para enlaces en el menú móvil */
+.mobile-item a,
+.mobile-menu a.mobile-item {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  padding: 8px 0;
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+}
+
+.mobile-item a:hover,
+.mobile-menu a.mobile-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding-left: 8px;
+}
