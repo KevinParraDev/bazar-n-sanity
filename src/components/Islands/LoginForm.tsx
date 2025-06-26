@@ -1,34 +1,26 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const RegisterForm: React.FC = () => {
-  const [name, setName] = useState('');
+const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (name && email && password) {
-      setMessage('✅ Cuenta creada con éxito');
-      setName('');
-      setEmail('');
-      setPassword('');
+    if (email && password) {
+      setMessage('✅ Sesión iniciada correctamente');
+      navigate("/home");
     } else {
-      setMessage('❌ Todos los campos son obligatorios');
+      setMessage('❌ Ingresa correo y contraseña');
     }
     setTimeout(() => setMessage(''), 3000);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Crear Cuenta</h2>
-      <input
-        type="text"
-        placeholder="Nombre"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-      />
+      <h2>Iniciar Sesión</h2>
       <input
         type="email"
         placeholder="Correo"
@@ -43,10 +35,10 @@ const RegisterForm: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
         required
       />
-      <button type="submit">Registrarse</button>
+      <button className='auth-button' type="submit">Entrar</button>
       {message && <p>{message}</p>}
     </form>
   );
 };
 
-export default RegisterForm;
+export default LoginForm;

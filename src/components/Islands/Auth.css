@@ -1,21 +1,14 @@
-/* Reset */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: "Poppins", sans-serif;
-  background: url(/background_wumpa_island.png);
+.auth {
+  font-family: 'LuckiestGuy', sans-serif;
+  background: url(../../assets/background_wumpa_island.png);
   background-size: cover;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #140c34;
 }
 
-/* Contenedor general */
 .auth-container {
   width: 100%;
   max-width: 400px;
@@ -27,26 +20,6 @@ body {
   animation: fadeIn 0.4s ease-in-out;
 }
 
-/* Animación de entrada */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Títulos */
-h2 {
-  font-size: 1.8rem;
-  color: #333;
-  margin-bottom: 1.5rem;
-}
-
-/* Inputs */
 input {
   width: 100%;
   padding: 12px 14px;
@@ -63,20 +36,20 @@ input:focus {
 }
 
 /* Botones */
-button {
+.auth-button {
   width: 100%;
   padding: 12px;
   font-size: 1rem;
   border: none;
   border-radius: 8px;
-  background-color: #764ba2;
+  background-color: #261f44;
   color: white;
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.auth-button:hover {
   background-color: #5e3a99;
 }
 
@@ -84,9 +57,8 @@ button:hover {
 .switch-button {
   margin-top: 1rem;
   background-color: transparent;
-  color: #000000;
+  color: #63606b;
   font-weight: 500;
-  text-decoration: underline;
   border: none;
   cursor: pointer;
   transition: color 0.3s ease;
@@ -96,9 +68,6 @@ button:hover {
   color: #444444;
 }
 
-/* Mensaje de alerta */
-p {
-  margin-top: 1rem;
-  font-size: 0.95rem;
-  color: #444;
+.auth h2 {
+    padding-bottom: 15px;
 }

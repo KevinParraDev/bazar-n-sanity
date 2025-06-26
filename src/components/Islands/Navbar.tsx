@@ -14,7 +14,7 @@ const Navbar: React.FC<Props> = ({ username }) => {
   const location = useLocation();
 
   // Verificar si estamos en la página de inicio
-  const isHomePage = location.pathname === '/';
+  const isHomePage = location.pathname === '/home';
   const isInventaryPage = location.pathname === '/inventory';
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const Navbar: React.FC<Props> = ({ username }) => {
             {gemCount}
           </div>
           {!isHomePage && (
-            <Link to="/" className="navbar-button">
+            <Link to="/home" className="navbar-button">
               Inicio
             </Link>
           )}
@@ -45,7 +45,6 @@ const Navbar: React.FC<Props> = ({ username }) => {
               Inventario
             </Link>
           )}
-          <div className="navbar-username">{username}</div>
         </div>
 
         <button className="menu-toggle mobile-only" onClick={() => setMenuOpen(!menuOpen)}>
@@ -58,7 +57,7 @@ const Navbar: React.FC<Props> = ({ username }) => {
             {wumpaCount} frutas
           </div>
           {!isHomePage && (
-            <Link to="/" className="mobile-item">
+            <Link to="/home" className="mobile-item">
               Inicio
             </Link>
           )}
