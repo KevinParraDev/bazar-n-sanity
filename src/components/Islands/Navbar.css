@@ -91,6 +91,10 @@
   .mobile-only {
     display: block;
   }
+
+  .navbar-left {
+    color: transparent;
+  }
 }
 
 /* Mobile menu dropdown */
