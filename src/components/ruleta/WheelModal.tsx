@@ -60,11 +60,11 @@ const WheelModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     <div className="wheel-pointer">▼</div>
                 </div>
                 {!result ? (
-                    <button onClick={handleSpin} disabled={spinning}>
+                    <button className="button-wheel" onClick={handleSpin} disabled={spinning}>
                         {spinning ? "Girando..." : "Girar"}
                     </button>
                 ) : (
-                    <button onClick={onClose}>Cerrar</button>
+                    <button className="button-wheel" onClick={onClose}>Cerrar</button>
                 )}
                 {result && <p className="wheel-result">{result}</p>}
             </div>

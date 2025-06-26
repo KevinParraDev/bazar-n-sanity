@@ -30,7 +30,7 @@
   transform: rotate(1440deg); /* 4 vueltas */
 }
 
-button {
+.button-wheel {
   background: #ff7823;
   border: none;
   padding: 10px 20px;
