@@ -31,6 +31,17 @@ const CrashFlapGame = () => {
   // Estado para detectar si estamos en móvil para estilos responsive del UI
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
+  // Estado para el popup de reglas
+  const [showRules, setShowRules] = useState(false);
+
+  // Mostrar reglas la primera vez que se entra al juego
+  useEffect(() => {
+    const hasSeenRules = localStorage.getItem('crashFlap_hasSeenRules');
+    if (!hasSeenRules) {
+      setShowRules(true);
+    }
+  }, []);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -336,7 +347,7 @@ const CrashFlapGame = () => {
             <button
               onClick={() => {
                 restart();
-                setTimeout(() => navigate('/'), 0);
+                setTimeout(() => navigate('/home'), 0);
               }}
               disabled={isProcessingRewards}
               style={{
@@ -355,6 +366,81 @@ const CrashFlapGame = () => {
               {isProcessingRewards ? 'Sumando...' : 'Volver al inicio'}
             </button>
           </div>        </>
+      )}
+
+      {/* Popup de reglas */}
+      {showRules && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            padding: '20px'
+          }}
+          onClick={() => {
+            setShowRules(false);
+            localStorage.setItem('crashFlap_hasSeenRules', 'true');
+          }}
+        >
+          <div 
+            style={{
+              backgroundColor: '#2d3748',
+              color: 'white',
+              padding: isMobile ? '20px' : '30px',
+              borderRadius: '15px',
+              maxWidth: isMobile ? '320px' : '400px',
+              width: '100%',
+              border: '3px solid #ffd700',
+              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
+              textAlign: 'center'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 style={{ margin: '0 0 20px 0', color: '#ffd700', fontSize: isMobile ? '20px' : '24px' }}>
+              🎮 CRASH FLAP
+            </h2>
+            <div style={{ textAlign: 'left', marginBottom: '20px', fontSize: isMobile ? '14px' : '16px', lineHeight: '1.5' }}>
+              <p><strong>🎯 Objetivo:</strong> Ayuda a Crash a volar por los tótems sin chocar</p>
+              <p><strong>🕹️ Control:</strong> Toca la pantalla o presiona ESPACIO para volar</p>
+              <p><strong>💰 Recompensas:</strong></p>
+              <ul style={{ marginLeft: '20px' }}>
+                <li>🥭 1 Wumpa por cada punto</li>
+                <li>💎 1 Gema cada 10 puntos</li>
+                <li>⏳ Reliquias especiales flotantes</li>
+              </ul>
+              <p><strong>⚠️ Tip:</strong> ¡Equipa diferentes máscaras desde tu inventario!</p>
+            </div>
+            <button
+              onClick={() => {
+                setShowRules(false);
+                localStorage.setItem('crashFlap_hasSeenRules', 'true');
+              }}
+              style={{
+                backgroundColor: '#4caf50',
+                color: 'white',
+                border: '2px solid #45a049',
+                padding: isMobile ? '10px 20px' : '12px 24px',
+                borderRadius: '8px',
+                fontSize: isMobile ? '14px' : '16px',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                width: '100%',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseOver={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#45a049'}
+              onMouseOut={(e) => (e.target as HTMLButtonElement).style.backgroundColor = '#4caf50'}
+            >
+              ¡Entendido! Comenzar a jugar
+            </button>
+          </div>
+        </div>
       )}
     </div>
       </div>
