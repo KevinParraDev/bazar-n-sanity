@@ -15,8 +15,8 @@ const Pipe = ({ x, height, isTop }: PipeProps) => (
       width: PIPE_WIDTH,
       height,
       backgroundImage: `url(${isTop ? pipeTotemTop : pipeTotemBottom})`,
-      backgroundSize: `100% ${height}px`, // Estira la imagen verticalmente
-      backgroundRepeat: 'repeat-y',        // O 'no-repeat' si prefieres estirado puro
+      backgroundSize: `100% ${height}px`, 
+      backgroundRepeat: 'repeat-y',        
       backgroundPosition: 'top',
       zIndex: 1,
     }}
