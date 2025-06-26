@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { Wheel } from 'react-custom-roulette';
+import { useState } from 'react';
 import { useEconomy } from '../context/EconomyContext';
 import { useInventory } from '../context/InventoryContext';
-import { type Product } from './Store/products';
+import { type Product } from './Store/products-separated';
 import './Ruleta.css';
 
 const prizeData = [
@@ -24,14 +23,21 @@ export default function Ruleta() {
   const { addToInventory } = useInventory();
 
   const handleSpinClick = () => {
+    if (mustSpin) return; // Evitar múltiples clicks
+    
     const newPrize = Math.floor(Math.random() * prizeData.length);
     setPrizeNumber(newPrize);
     setMustSpin(true);
     setSelectedPrize(null); // Limpiar mensaje mientras gira
+    
+    // Parar automáticamente después de 3 segundos
+    setTimeout(() => {
+      handleStopSpinning(newPrize);
+    }, 3000);
   };
 
-  const handleStopSpinning = () => {
-    const selected = prizeData[prizeNumber];
+  const handleStopSpinning = (prizeIndex: number) => {
+    const selected = prizeData[prizeIndex];
     setSelectedPrize(selected);
 
     if (selected.type === 'wumpa') {
@@ -41,7 +47,8 @@ export default function Ruleta() {
         id: Date.now(),
         name: String(selected.value),
         price: 0,
-        currency: 'wumpa', // or 'gem', depending on your logic
+        currency: 'wumpa',
+        category: 'collectible', // Agregar la propiedad category requerida
         colors: [{ name: 'Default', image: selected.image }],
       };
       addToInventory(product);
@@ -52,23 +59,36 @@ export default function Ruleta() {
 
   return (
     <div className="ruleta-wrapper">
-      <div className="ruleta-wheel">
-        <Wheel
-          mustStartSpinning={mustSpin}
-          prizeNumber={prizeNumber}
-          data={prizeData.map(item => ({ option: item.option }))}
-          outerBorderColor="#ffd700"
-          outerBorderWidth={8}
-          radiusLineColor="#ffffff"
-          radiusLineWidth={2}
-          textColors={['#fff']}
-          fontSize={16}
-          backgroundColors={['#d32f2f', '#1976d2']}
-          onStopSpinning={handleStopSpinning}
-        />
-
+      <div className="ruleta-container">
+        <div 
+          className={`ruleta-wheel ${mustSpin ? 'spinning' : ''}`}
+          style={{
+            transform: `rotate(${mustSpin ? prizeNumber * (360 / prizeData.length) + 1440 : 0}deg)` // 1440 = 4 vueltas completas
+          }}
+        >
+          {prizeData.map((item, index) => (
+            <div
+              key={index}
+              className="wheel-segment"
+              style={{
+                transform: `rotate(${index * (360 / prizeData.length)}deg)`,
+                backgroundColor: index % 2 === 0 ? '#d32f2f' : '#1976d2'
+              }}
+            >
+              <div className="segment-content">
+                <img src={item.image} alt={item.option} className="segment-image" />
+                <span className="segment-text">{item.option}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <div className="wheel-pointer"></div>
+        
         <div className="ruleta-spin-button">
-          <button onClick={handleSpinClick}>JUGAR</button>
+          <button onClick={handleSpinClick} disabled={mustSpin}>
+            {mustSpin ? 'GIRANDO...' : 'JUGAR'}
+          </button>
         </div>
       </div>
 
@@ -77,7 +97,7 @@ export default function Ruleta() {
           <>
             <h3>
               ¡Ganaste: {selectedPrize.type === 'wumpa'
-                ? `          ${selectedPrize.value} frutas Wumpa`
+                ? `${selectedPrize.value} frutas Wumpa`
                 : selectedPrize.value}!
             </h3>
             <img src={selectedPrize.image} alt={selectedPrize.option} />

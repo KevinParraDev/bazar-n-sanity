@@ -1,6 +1,6 @@
 // ProductModal.tsx
 import React, { useState } from "react";
-import type { Product } from "./products";
+import type { Product } from "./products-separated";
 import "./ProductModal.css";
 import { useEconomy } from "../../context/EconomyContext";
 import { useInventory } from "../../context/InventoryContext";
@@ -26,7 +26,7 @@ const ProductModal: React.FC<Props> = ({ product, onClose }) => {
       addToInventory(product)
       alert("¡Compra exitosa!");
     } else {
-      alert("¡No tienes suficientes frutas Wumpa!");
+      alert("¡No tienes suficiente moneda para esta compra!");
     }
   };
 

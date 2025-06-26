@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import type { Product } from "./products";
+import type { Product } from "./products-separated";
+import { useInventory } from "../../context/InventoryContext";
 import "./ProductCard.css";
 
 interface Props {
@@ -15,11 +16,19 @@ const currencyIcons = {
 
 const ProductCard: React.FC<Props> = ({ product, onBuy }) => {
   const [flipped, setFlipped] = useState(false);
+  const { hasItem } = useInventory();
 
   const handleFlip = () => setFlipped((prev) => !prev);
 
+  // Detectar si el texto es largo para aplicar estilos especiales
+  const isLongName = product.name.length > 15;
+  const isLongColor = product.colors[0].name.length > 8;
+  
+  // Verificar si el item ya fue comprado
+  const isOwned = hasItem(product);
+
   return (
-    <div className={`product-card ${flipped ? "flipped" : ""}`} onClick={handleFlip}>
+    <div className={`product-card ${flipped ? "flipped" : ""} ${isOwned ? "owned" : ""}`} onClick={!isOwned ? handleFlip : undefined}>
       <div className="product-card-inner">
         {/* Frente */}
         <div className="product-card-front">
@@ -36,6 +45,12 @@ const ProductCard: React.FC<Props> = ({ product, onBuy }) => {
             />
             {product.price}
           </div>
+          {isOwned && (
+            <div className="owned-overlay">
+              <div className="owned-checkmark">✓</div>
+              <div className="owned-text">COMPRADO</div>
+            </div>
+          )}
         </div>
 
         {/* Reverso */}
@@ -46,25 +61,30 @@ const ProductCard: React.FC<Props> = ({ product, onBuy }) => {
             setFlipped(false);   // Regresa la carta al frente
           }}
         >
-          <h3>{product.name}</h3>
-          <p>
-            <div className="product-price-back">
-              {product.price}
-              <img
-                src={currencyIcons[product.currency]}
-                alt="Moneda"
-                className="fruit-icon"
-              />
-            </div>
-          </p>
+          <div className="product-info">
+            <h3 className={isLongName ? "long-text" : ""}>{product.name}</h3>
+            <div className={`product-color ${isLongColor ? "long-text" : ""}`}>{product.colors[0].name}</div>
+          </div>
+          <div className="product-price-back">
+            {product.price}
+            <img
+              src={currencyIcons[product.currency]}
+              alt="Moneda"
+              className="fruit-icon"
+            />
+          </div>
           <button
             onClick={(e) => {
               e.stopPropagation(); // Para que no gire al hacer clic en el botón
-              onBuy(product);
-              setFlipped(false);
+              if (!isOwned) {
+                onBuy(product);
+                setFlipped(false);
+              }
             }}
+            disabled={isOwned}
+            className={isOwned ? "owned-button" : ""}
           >
-            Comprar
+            {isOwned ? "COMPRADO" : "Comprar"}
           </button>
         </div>
       </div>

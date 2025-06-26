@@ -8,6 +8,8 @@ import minigameWumpa from '../assets/minigame-wumpa.png';
 import minigameLostTreasures from '../assets/minigame-lost-treasures.png';
 import { useState, useEffect } from 'react';
 import StorePage from '../components/Store/StorePage';
+import MaskStore from '../components/Store/MaskStore/MaskStore';
+import TreasureStore from '../components/Store/TreasureStore/TreasureStore';
 import WordleGame from '../components/wordle/WordleGame';
 import Ruleta from '../components/Ruleta';
 
@@ -79,7 +81,13 @@ const IslandExploration = () => {
         <div className="bazaar-section">
           <h2 className="bazaar-title">BAZAR</h2>
           <div className="bazaar-container">
-            <StorePage />
+            {islandId === 'wumpa-island' ? (
+              <MaskStore />
+            ) : islandId === 'lost-treasures' ? (
+              <TreasureStore />
+            ) : (
+              <StorePage />
+            )}
           </div>
         </div>
         {islandId === 'wumpa-island' && (

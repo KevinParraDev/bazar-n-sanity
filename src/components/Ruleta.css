@@ -1,7 +1,3 @@
-.ruleta-wrapper canvas {
-  background: transparent;
-}
-
 .ruleta-wrapper {
   display: flex;
   justify-content: center;
@@ -14,12 +10,81 @@
   border: none;
 }
 
+.ruleta-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
 .ruleta-wheel {
-  flex: 1;
-  max-width: 400px;
-  background: none;   
-  border: none;         
-  box-shadow: none;     
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 8px solid #ffd700;
+  overflow: hidden;
+  transition: transform 3s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ruleta-wheel.spinning {
+  transition: transform 3s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.wheel-segment {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.segment-content {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%) rotate(-22.5deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.segment-image {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.segment-text {
+  max-width: 60px;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 30px solid #ffd700;
+  z-index: 10;
 }
 
 .ruleta-spin-button {
@@ -40,9 +105,15 @@
   transition: transform 0.2s, background-color 0.2s;
 }
 
-.ruleta-spin-button button:hover {
+.ruleta-spin-button button:hover:not(:disabled) {
   transform: scale(1.05);
-  background-color: rgba(255, 255, 255, 0.507); /* leve para hover */
+  background-color: rgba(255, 255, 255, 0.507);
+}
+
+.ruleta-spin-button button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 

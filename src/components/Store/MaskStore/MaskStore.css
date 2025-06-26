@@ -1,0 +1,131 @@
+.mask-store {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mask-store-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #2d3748, #4a5568);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.mask-store-header h2 {
+  color: #fff;
+  margin: 0;
+  font-size: 1.8rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.currency-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.currency-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.masks-grid-horizontal {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  padding: 20px 0;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.mask-card-container {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.mask-card-container:hover {
+  transform: translateY(-5px) scale(1.05);
+}
+
+.store-info {
+  background: linear-gradient(135deg, #1a202c, #2d3748);
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+  text-align: center;
+  color: #e2e8f0;
+}
+
+.store-info p {
+  margin: 10px 0;
+  font-size: 1.1rem;
+}
+
+/* Notificación de compra */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #4caf50, #45a049);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .masks-grid-horizontal {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .masks-grid-horizontal {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+  .mask-store-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .mask-store-header h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .masks-grid-horizontal {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 12px;
+  }
+}

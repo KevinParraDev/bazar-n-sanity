@@ -1,7 +1,7 @@
 import Bird from './components/Bird';
 import Pipe from './components/Pipe';
 import { useGameLogic } from './hooks/useGameLogic';
-import relicImg from '../assets/react.svg'; // Usa tu imagen de reliquia real
+import gemImg from '../assets/purple-crystal-2.webp';
 import crashFlappyBg from '../assets/background_crash_flap.png';
 import { useNavigate } from 'react-router-dom';
 import { useEconomy } from '../context/EconomyContext';
@@ -13,13 +13,20 @@ const GAME_HEIGHT = 600;
 
 const CrashFlapGame = () => {
   const { birdY, pipes, isGameOver, score, jump, restart, pipeGap, relics, relicsCollected } = useGameLogic();
-  const { wumpaCount, addWumpa } = useEconomy();
+  const { wumpaCount, gemCount, addCurrency } = useEconomy();
   const navigate = useNavigate();
   
   // Estados para la animación de transferencia de wumpas
   const [gameWumpas, setGameWumpas] = useState(0);
   const [isTransferring, setIsTransferring] = useState(false);
   const [hasTransferred, setHasTransferred] = useState(false);
+  // Estados para la animación de transferencia de gemas
+  const [gameGems, setGameGems] = useState(0);
+  const [isTransferringGems, setIsTransferringGems] = useState(false);
+  const [hasTransferredGems, setHasTransferredGems] = useState(false);
+
+  // Estado para bloquear botones durante todo el proceso
+  const [isProcessingRewards, setIsProcessingRewards] = useState(false);
 
   // Estado para detectar si estamos en móvil para estilos responsive del UI
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -33,10 +40,11 @@ const CrashFlapGame = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Actualizar wumpas del juego cuando cambie el score
+  // Actualizar wumpas y gemas del juego cuando cambie el score o relicsCollected
   useEffect(() => {
     setGameWumpas(score);
-  }, [score]);
+    setGameGems(relicsCollected);
+  }, [score, relicsCollected]);
 
   // Resetear estados cuando se reinicia el juego
   useEffect(() => {
@@ -44,6 +52,10 @@ const CrashFlapGame = () => {
       setIsTransferring(false);
       setHasTransferred(false);
       setGameWumpas(0);
+      setIsTransferringGems(false);
+      setHasTransferredGems(false);
+      setGameGems(0);
+      setIsProcessingRewards(false);
     }
   }, [isGameOver]);
 
@@ -58,22 +70,57 @@ const CrashFlapGame = () => {
           clearInterval(interval);
           setIsTransferring(false);
           setHasTransferred(true);
+          // Si no hay gemas, finalizar procesamiento aquí
+          if (gameGems <= 0) {
+            setIsProcessingRewards(false);
+          }
           return 0;
         }
-        addWumpa(1);
+        addCurrency("wumpa", 1);
         return prev - 1;
       });
     }, 100); // Transferir 1 wumpa cada 100ms
   };
+
+  // Función para iniciar la transferencia de gemas
+  const startGemTransfer = () => {
+    if (gameGems <= 0 || isTransferringGems || hasTransferredGems) return;
+    
+    setIsTransferringGems(true);
+    const interval = setInterval(() => {
+      setGameGems(prev => {
+        if (prev <= 0) {
+          clearInterval(interval);
+          setIsTransferringGems(false);
+          setHasTransferredGems(true);
+          setIsProcessingRewards(false); // Finalizar procesamiento cuando terminan las gemas
+          return 0;
+        }
+        addCurrency("gem", 1);
+        return prev - 1;
+      });
+    }, 150); // Transferir 1 gema cada 150ms (más lento que wumpas)
+  };
   // Iniciar la transferencia automáticamente cuando aparece el pop-up
   useEffect(() => {
-    if (isGameOver && gameWumpas > 0 && !hasTransferred) {
+    if (isGameOver && !hasTransferred && !hasTransferredGems) {
+      // Inmediatamente bloquear botones cuando termina el juego
+      setIsProcessingRewards(true);
+      
       const timer = setTimeout(() => {
-        startWumpaTransfer();
+        if (gameWumpas > 0) startWumpaTransfer();
+        if (gameGems > 0) {
+          setTimeout(() => startGemTransfer(), 500); // Iniciar gemas 500ms después
+        }
+        // Si no hay wumpas ni gemas, desbloquear inmediatamente
+        if (gameWumpas <= 0 && gameGems <= 0) {
+          setIsProcessingRewards(false);
+        }
       }, 1000); // Esperar 1 segundo después de que aparezca el pop-up
       
       return () => clearTimeout(timer);
-    }  }, [isGameOver, gameWumpas, hasTransferred, isTransferring]);
+    }
+  }, [isGameOver, gameWumpas, gameGems, hasTransferred, hasTransferredGems]);
 
   // Calcular escala responsive
   const getScale = () => {
@@ -152,7 +199,7 @@ const CrashFlapGame = () => {
           />
         </>
       ))}
-      {/* Reliquias */}
+      {/* Gemas */}
       {relics.map((relic, idx) =>
         !relic.collected && (
           <div
@@ -163,12 +210,12 @@ const CrashFlapGame = () => {
               top: relic.y,
               width: 40,
               height: 40,
-              backgroundImage: `url(${relicImg})`,
+              backgroundImage: `url(${gemImg})`,
               backgroundSize: 'contain',
               backgroundRepeat: 'no-repeat',
               zIndex: 2,
             }}
-            title="Reliquia"
+            title="Gema"
           />
         )
       )}      {  /* Overlay para el score y reliquias */}
@@ -189,7 +236,10 @@ const CrashFlapGame = () => {
           <img src="/images/wumpa-fruit.png" alt="Wumpa" style={{ width: 36, height: 36 }} />
           <span style={{ fontWeight: 'bold', fontSize: 32 }}>{score}</span>
         </div>
-        <div style={{ fontSize: 20 }}>Reliquias: {relicsCollected}</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <img src="/images/purple-crystal.webp" alt="Gema" style={{ width: 36, height: 36 }} />
+          <span style={{ fontWeight: 'bold', fontSize: 32 }}>{relicsCollected}</span>
+        </div>
       </div>
       {isGameOver && (
         <>
@@ -232,7 +282,7 @@ const CrashFlapGame = () => {
             }}>
               <img src="/images/wumpa-fruit.png" alt="Wumpa" style={{ width: 32, height: 32 }} />
               <span>
-                Wumpas: <b>{wumpaCount}</b>
+                <b>{wumpaCount}</b>
                 {gameWumpas > 0 && (
                   <span style={{ 
                     color: isTransferring ? '#4CAF50' : '#FFC107',
@@ -243,41 +293,67 @@ const CrashFlapGame = () => {
                   </span>
                 )}
               </span>
-            </div>            <div style={{ marginBottom: 24 }}>Reliquias: <b>{relicsCollected}</b></div>
-            
-            <button
+            </div>            <div style={{ 
+              marginBottom: 24,
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              gap: 8,
+              flexWrap: 'wrap'
+            }}>
+              <img src="/images/purple-crystal.webp" alt="Gema" style={{ width: 32, height: 32 }} />
+              <span>
+                <b>{gemCount}</b>
+                {gameGems > 0 && (
+                  <span style={{ 
+                    color: isTransferringGems ? '#9C27B0' : '#E91E63',
+                    fontWeight: 'bold',
+                    animation: isTransferringGems ? 'pulse 0.5s infinite' : 'none'
+                  }}>
+                    {' '}(+{gameGems})
+                  </span>
+                )}
+              </span>
+            </div>              <button
               onClick={restart}
+              disabled={isProcessingRewards}
               style={{
                 fontSize: isMobile ? 18 : 22,
                 padding: isMobile ? '10px 20px' : '10px 30px',
                 marginBottom: isMobile ? 10 : 12,
                 borderRadius: 8,
                 border: '2px solid #fff',
-                background: '#ff9800',
-                color: '#fff',
-                cursor: 'pointer',
-                width: '100%'
+                background: isProcessingRewards ? '#666' : '#ff9800',
+                color: isProcessingRewards ? '#999' : '#fff',
+                cursor: isProcessingRewards ? 'not-allowed' : 'pointer',
+                width: '100%',
+                opacity: isProcessingRewards ? 0.5 : 1,
+                transition: 'all 0.3s ease'
               }}
             >
-              Reiniciar
+              {isProcessingRewards ? 'Sumando...' : 'Reiniciar'}
             </button>
             <button
               onClick={() => {
                 restart();
                 setTimeout(() => navigate('/'), 0);
               }}
+              disabled={isProcessingRewards}
               style={{
                 fontSize: isMobile ? 16 : 18,
                 padding: isMobile ? '8px 16px' : '8px 20px',
                 borderRadius: 8,
                 border: '2px solid #fff',
-                background: '#444',
-                color: '#fff',
-                cursor: 'pointer',
-                width: '100%'
+                background: isProcessingRewards ? '#333' : '#444',
+                color: isProcessingRewards ? '#999' : '#fff',
+                cursor: isProcessingRewards ? 'not-allowed' : 'pointer',
+                width: '100%',
+                opacity: isProcessingRewards ? 0.5 : 1,
+                transition: 'all 0.3s ease'
               }}
             >
-              Volver al inicio            </button>
+              {isProcessingRewards ? 'Sumando...' : 'Volver al inicio'}
+            </button>
           </div>        </>
       )}
     </div>

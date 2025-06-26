@@ -7,13 +7,13 @@ import { EconomyProvider } from './context/EconomyContext.tsx'
 import { InventoryProvider } from './context/InventoryContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+
     <EconomyProvider>
       <InventoryProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </InventoryProvider>
-    </EconomyProvider>
-  </StrictMode>,
+    </EconomyProvider>,
+
 )
