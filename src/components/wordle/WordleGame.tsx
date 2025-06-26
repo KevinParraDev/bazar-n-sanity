@@ -130,7 +130,7 @@ export default function WordleGame() {
       <div className="layout">
         <div className="sidebar"> 
           <button onClick={() => setShowRules(true)}>ℹ️ Ver Reglas</button> 
-          <h2>
+          <h2 className="relic-text">
             <img src={wumpaImg} alt="Reliquia" className="wumpa-icon" />
             Reliquias: {relic}
           </h2>
