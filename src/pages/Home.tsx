@@ -51,13 +51,13 @@ const Home = () => {
         onClick={prevImage}
         className="absolute left-10 top-1/2 -translate-y-1/2 move-arrows"
       >
-        {">"}
+        {"<"}
       </button>
       <button
         onClick={nextImage}
         className="absolute right-10 top-1/2 -translate-y-1/2 move-arrows"
       >
-        {"<"}
+        {">"}
       </button>
     </div>
   );
