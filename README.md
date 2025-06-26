@@ -1,54 +1,50 @@
-# React + TypeScript + Vite
+# BAZAR N SANITY Equipo 22 DEV WEB
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicativo web inspirado en el universo colorido y caótico de Crash Bandicoot
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tecnologia utilizada
 
-## Expanding the ESLint configuration
+- React + Typescript
+- Vite
+- Css
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+-----
+## Instalacion del aplicativo web
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Se debe tener instalado node.js v16, npm y git (opcional para clonar el repositorio)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Entra a la carpeta del proyecto (puedes usar el comando: cd bazar-n-sanity)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Se instala las dependencias (npm install)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Se inicia el servidor de desarrollo (npm run dev)
+
+
+## ESTRUCTURA DEL PROYECTO
+
+- login #Todo lo relacionado con Login y registro de usuarios
+- public Todo lo que tiene que ver con imagenes del aplicativo y sprites de los minijuegos
+- src/
+    Components # Estructura base de minijuegos, vista del inventario, navegacion y lo relacionado a el bazar
+
+    Context # Manejo de la economia y el inventario
+
+    Flappy Bird # Relacionado al minijuego Crash Flap
+
+    Pages # Paginas en las que se pueden navegar, la vista de cada isla y su respectiva exploracion (vista de minijuegos)
+
+    Utils # Relacionado a las palabras usadas en el minijuego de Wordle
+
+- App.tsx Rutas de cada archivo que hay en el proyecto
+
+## FUNCIONALIDADES
+
+- Sistema de Login y registro
+- Exploracion de islas (Isla wumpa e isla de tesoros perdidos)
+- Minijuegos Crash Wordle, Crash Flap, Fruit Catcher y Ruleta
+- Sistema de recompensas por desempeño, puede ganar frutas wumpa,  cristales o reliquias
+- Personalizacion de mascaras
+- Desafio Contrarreloj
+
