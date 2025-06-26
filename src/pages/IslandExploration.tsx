@@ -10,8 +10,8 @@ import { useState, useEffect } from 'react';
 import StorePage from '../components/Store/StorePage';
 import MaskStore from '../components/Store/MaskStore/MaskStore';
 import TreasureStore from '../components/Store/TreasureStore/TreasureStore';
-import WordleGame from '../components/wordle/WordleGame';
-import Ruleta from '../components/Ruleta';
+import WheelButton from '../components/ruleta/WheelButton';
+import WheelModal from '../components/ruleta/WheelModal';
 
 
 const islandsConfig = {
@@ -29,7 +29,7 @@ const islandsConfig = {
     minigameBackground: minigameLostTreasures,
     minigames: [
       { id: 'crash-flap', name: 'CRASH FLAP', route: '/crashflap' },
-      { id: 'wordle', name: 'CRASH WORDLE', route: '/wordle'}
+      { id: 'wordle', name: 'CRASH WORDLE', route: '/wordle' }
     ]
   }
 };
@@ -37,7 +37,7 @@ const islandsConfig = {
 const IslandExploration = () => {
   const { islandId } = useParams<{ islandId: string }>();
   const navigate = useNavigate();
-
+  const [showWheel, setShowWheel] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isTablet, setIsTablet] = useState(window.innerWidth <= 1024 && window.innerWidth > 768);
 
@@ -58,6 +58,10 @@ const IslandExploration = () => {
 
   return (
     <div className="island-wrapper">
+      <>
+        <WheelButton onClick={() => setShowWheel(true)} />
+        {showWheel && <WheelModal onClose={() => setShowWheel(false)} />}
+      </>
       <section
         className="island-section"
         style={{
@@ -75,30 +79,21 @@ const IslandExploration = () => {
           </h1>
         </div>
 
-        
+
       </section>
 
-        <div className="bazaar-section">
-          <h2 className="bazaar-title">BAZAR</h2>
-          <div className="bazaar-container">
-            {islandId === 'wumpa-island' ? (
-              <MaskStore />
-            ) : islandId === 'lost-treasures' ? (
-              <TreasureStore />
-            ) : (
-              <StorePage />
-            )}
-          </div>
+      <div className="bazaar-section">
+        <h2 className="bazaar-title">BAZAR</h2>
+        <div className="bazaar-container">
+          {islandId === 'wumpa-island' ? (
+            <MaskStore />
+          ) : islandId === 'lost-treasures' ? (
+            <TreasureStore />
+          ) : (
+            <StorePage />
+          )}
         </div>
-        {islandId === 'wumpa-island' && (
-          <section className="roulette-section">
-            <h2 className="roulette-title">MINIJUEGO – RULETA</h2>
-                
-            <div className="roulette-full">
-              <Ruleta />
-            </div>
-          </section>
-        )}
+      </div>
 
 
       <section

@@ -1,0 +1,78 @@
+.wheel-modal-backdrop {
+  position: fixed;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.wheel-image {
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  border-radius: 50%;
+  transition: transform 4s cubic-bezier(0.1, 0.8, 0.2, 1); /* suave y realista */
+}
+
+.wheel {
+  width: 150px;
+  height: 150px;
+  margin: 20px auto;
+  background-image: url('/icons/wheel-base.png');
+  background-size: cover;
+  transition: transform 3s ease-out;
+}
+
+.spinning {
+  transform: rotate(1440deg); /* 4 vueltas */
+}
+
+button {
+  background: #ff7823;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  color: rgb(255, 249, 242);
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.wheel-result {
+  margin-top: 16px;
+  font-size: 18px;
+}
+
+.wheel-wrapper {
+  position: relative;
+  max-width: 400px;
+  max-width: 400px;
+  margin: 0 auto 20px;
+}
+
+.wheel-image {
+  width: 100%;
+  height: 100%;
+  transition: transform 4s ease-out;
+  transform-origin: center center;
+  border-radius: 50%;
+}
+
+.wheel-pointer {
+  position: absolute;
+  top: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40px;
+  color: #1e0c03;
+  text-shadow: 1px 1px 2px #000;
+}
+
+.wheel-modal h2{
+    font-size: x-large;
+    color: #ffffff;
+    text-shadow: 10px 10px 20px black;
+}
