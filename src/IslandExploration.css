@@ -237,8 +237,11 @@ zzbody {
   background: #000;
 }
 .roulette-section {
-  background: linear-gradient(to bottom, #03001e, #0f0c29);
-  padding: 4rem 2rem;
+  background-image: url('/images/crash-idle.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 5rem 2rem;
   color: white;
   text-align: center;
 }

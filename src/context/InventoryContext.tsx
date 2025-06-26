@@ -18,11 +18,9 @@ export const InventoryProvider: React.FC<{ children: ReactNode }> = ({ children 
 
   const addToInventory = (product: Product) => {
   setInventory((prev) => {
-    console.log('Se añadió', product.name, 'al inventario');
     const index = prev.findIndex(
       (item) =>
-        item.product.id === product.id &&
-        item.product.colors[0].name === product.colors[0].name
+        item.product.name === product.name
     );
 
     if (index !== -1) {
@@ -34,6 +32,7 @@ export const InventoryProvider: React.FC<{ children: ReactNode }> = ({ children 
     }
   });
 };
+
 
   return (
     <InventoryContext.Provider value={{ inventory, addToInventory }}>
