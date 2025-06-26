@@ -9,67 +9,118 @@
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 }
+
 .App {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
   background: url('../assets/background_island_of_lost_treasures.png') no-repeat center center fixed;
   background-size: cover;
+  padding-top: 80px; /* Espacio para la navbar */
 }
 
-.layout {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
+.wordle-container {
   width: 100%;
-  max-width: 1000px;
-  height: 100%;
-  gap: 2rem; 
-  padding: 2rem;
-  box-sizing: border-box;
-  margin: 0 auto;
-}
-
-
-.sidebar {
-  width: 220px;
+  max-width: 500px;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
   gap: 1.5rem;
-  color: white;
-  padding-top: 1rem;
 }
 
-
-.sidebar button {
-  font-size: 0.9rem;
-  padding: 0.5rem 1rem;
-  font-family: 'LuckiestGuy', cursive;
-  border-radius: 12px;
-  border: none;
-  background-color: black;
+.wordle-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
-.title {
+.wordle-title {
   font-size: 2.5rem;
-  margin-bottom: 1rem;
+  margin: 0;
   text-align: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.wordle-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.stat-item.timer {
+  background: rgba(255, 165, 0, 0.2);
+  border-color: orange;
+}
+
+.stat-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.timer-icon {
+  font-size: 1.2rem;
+}
+
+.stat-value {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+}
+
+.wordle-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .game-section {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
-  margin-top: 1rem;
+  gap: 1.5rem;
+}
+
+.wordle-controls {
+  display: flex;
+  justify-content: center;
+}
+
+.rules-button {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-family: 'LuckiestGuy', cursive;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.rules-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 
@@ -172,60 +223,110 @@
   background-color: #dd8a13;
 }
 
+/* Notificación de Wordle */
+.wordle-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: slideInRight 0.3s ease-out;
+}
 
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 
 @media (max-width: 768px) {
-  .layout {
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    overflow-y: auto;
-    height: 100vh;
+  .App {
+    padding-top: 70px;
+  }
+
+  .wordle-container {
+    max-width: 100%;
     padding: 0.5rem;
+    gap: 1rem;
   }
 
-  .sidebar {
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    width: 100%;
-    padding: 0.5rem 0;
+  .wordle-title {
+    font-size: 1.8rem;
   }
 
-  .game-section {
-    width: 100%;
-    padding: 0.5rem;
-    flex: 1;
+  .wordle-stats {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
-  .title {
-    font-size: 1.6rem;
+  .stat-item {
+    padding: 0.4rem 0.8rem;
+    min-width: 100px;
+    justify-content: center;
+  }
+
+  .stat-value {
+    font-size: 1rem;
   }
 
   .board {
     transform: scale(0.9);
-    transform-origin: top center;
+    transform-origin: center;
   }
 
   .keyboard {
     transform: scale(0.9);
-    transform-origin: bottom center;
+    transform-origin: center;
     margin-bottom: 0.5rem;
+  }
+
+  .rules-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
   }
 }
 
-.relic-text {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.2rem;
-  color: white;
-  margin: 0;
-}
+@media (max-width: 480px) {
+  .wordle-title {
+    font-size: 1.5rem;
+  }
 
-.wumpa-icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
+  .wordle-stats {
+    gap: 0.8rem;
+  }
+
+  .stat-item {
+    padding: 0.3rem 0.6rem;
+    min-width: 80px;
+  }
+
+  .stat-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .stat-value {
+    font-size: 0.9rem;
+  }
+
+  .board {
+    transform: scale(0.8);
+  }
+
+  .keyboard {
+    transform: scale(0.8);
+  }
 }
 

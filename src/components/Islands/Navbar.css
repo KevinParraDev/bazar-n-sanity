@@ -118,3 +118,23 @@
   gap: 8px;
   font-size: 16px;
 }
+
+/* Estilos para enlaces en el menú móvil */
+.mobile-item a,
+.mobile-menu a.mobile-item {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  padding: 8px 0;
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+}
+
+.mobile-item a:hover,
+.mobile-menu a.mobile-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding-left: 8px;
+}

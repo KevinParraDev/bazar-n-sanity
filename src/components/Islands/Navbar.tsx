@@ -10,12 +10,12 @@ interface Props {
 const Navbar: React.FC<Props> = ({ username }) => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { wumpaCount, gemCount } = useEconomy();
+  const { wumpaCount, gemCount, relicCount } = useEconomy();
   const location = useLocation();
 
   // Verificar si estamos en la página de inicio
-  const isHomePage = location.pathname === '/home';
-  const isInventaryPage = location.pathname === '/inventory';
+  const isHomePage = location.pathname === '/home' || location.pathname === '/';
+  const isInventoryPage = location.pathname === '/inventory';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -32,15 +32,19 @@ const Navbar: React.FC<Props> = ({ username }) => {
             {wumpaCount}
           </div>
           <div className="navbar-fruits">
-            <img src="/images/purple-crystal.webp" alt="Fruta" className="fruit-icon" />
+            <img src="/images/purple-crystal.webp" alt="Gemas" className="fruit-icon" />
             {gemCount}
+          </div>
+          <div className="navbar-fruits">
+            <img src="/images/time_relic_crash.webp" alt="Reliquias" className="fruit-icon" />
+            {relicCount}
           </div>
           {!isHomePage && (
             <Link to="/home" className="navbar-button">
               Inicio
             </Link>
           )}
-          {!isInventaryPage && (
+          {!isInventoryPage && (
             <Link to="/inventory" className="navbar-button">
               Inventario
             </Link>
@@ -56,14 +60,24 @@ const Navbar: React.FC<Props> = ({ username }) => {
             <img src="/images/wumpa-fruit.png" alt="Fruta" className="fruit-icon" />
             {wumpaCount} frutas
           </div>
+          <div className="mobile-item">
+            <img src="/images/purple-crystal.webp" alt="Gemas" className="fruit-icon" />
+            {gemCount} gemas
+          </div>
+          <div className="mobile-item">
+            <img src="/images/time_relic_crash.webp" alt="Reliquias" className="fruit-icon" />
+            {relicCount} reliquias
+          </div>
           {!isHomePage && (
-            <Link to="/home" className="mobile-item">
-              Inicio
+            <Link to="/home" className="mobile-item" onClick={() => setMenuOpen(false)}>
+              🏠 Inicio
             </Link>
           )}
-          <Link to="/inventory" className="mobile-item">
-            Tienda
-          </Link>
+          {!isInventoryPage && (
+            <Link to="/inventory" className="mobile-item" onClick={() => setMenuOpen(false)}>
+              🎒 Inventario
+            </Link>
+          )}
           <div className="mobile-item">👤 {username}</div>
         </div>
       )}

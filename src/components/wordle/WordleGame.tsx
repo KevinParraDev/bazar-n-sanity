@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { getRandomWord, evaluateGuess } from "../../utils/word-utils";
 import { GameBoard } from "./GameBoard";
 import { Keyboard } from "./Keyboard";
+import { useEconomy } from "../../context/EconomyContext";
 import "../../styles/wordle.css";
-import wumpaImg from "../../assets/time_relic_crash.webp";
-
+import gemImg from "../../assets/time_relic_crash.webp";
 
 export default function WordleGame() {
   const [solution, setSolution] = useState(""); //La palabra correcta
@@ -13,11 +13,13 @@ export default function WordleGame() {
   const [currentGuess, setCurrentGuess] = useState(""); //Intento actual
   const [gameOver, setGameOver] = useState(false); 
   const [alertMessage, setAlertMessage] = useState("");
-  const [relic, setRelic] = useState(0); //useState para las reliquias se guarden
+  const [notification, setNotification] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(90); //temporizador
   const [showRules, setShowRules] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const [letterStatuses, setLetterStatuses] = useState<Record<string, "correct" | "present" | "absent" | undefined>>({});//actualiza teclado virtual
+
+  const { addCurrency, relicCount } = useEconomy();
 
   useEffect(() => {
     setSolution(getRandomWord());
@@ -31,7 +33,8 @@ export default function WordleGame() {
         if (prev <= 1) {
           clearInterval(timer);
           setGameOver(true);
-          alert("⏰ Se acabó el tiempo. Perdiste.");
+          setNotification("⏰ Se acabó el tiempo. Perdiste.");
+          setTimeout(() => setNotification(null), 3000);
           return 0;
         }
         return prev - 1;
@@ -46,7 +49,7 @@ export default function WordleGame() {
     setTimeout(() => setAlertMessage(""), 2000);
   };
 
-  const calcularRelic = (intentos: number) => {
+  const calcularReliquias = (intentos: number) => {
     switch (intentos) {
       case 1: return 10;
       case 2: return 5;
@@ -99,10 +102,10 @@ export default function WordleGame() {
         setGameOver(true);
 
         if (currentGuess === solution) { //si el intento actual es la misma palabra que la solucion
-          const relicGanadas = calcularRelic(newGuesses.length);
-          setRelic(prev => prev + relicGanadas);
-          setTimeout(() =>
-            alert(`🎉 ¡Ganaste! Has ganado ${relicGanadas} reliquias`), 100);
+          const reliquiasGanadas = calcularReliquias(newGuesses.length);
+          addCurrency("relic", reliquiasGanadas);
+          setNotification(`🎉 ¡Ganaste! +${reliquiasGanadas} reliquias`);
+          setTimeout(() => setNotification(null), 3000);
         }
       }
     } else if (key === "⌫") {
@@ -127,20 +130,41 @@ export default function WordleGame() {
 
   return (
     <div className="App wordle-root">
-      <div className="layout">
-        <div className="sidebar"> 
-          <button onClick={() => setShowRules(true)}>ℹ️ Ver Reglas</button> 
-          <h2 className="relic-text">
-            <img src={wumpaImg} alt="Reliquia" className="wumpa-icon" />
-            Reliquias: {relic}
-          </h2>
-          <h3>🕒 Tiempo restante: {timeLeft}</h3>
+      {notification && (
+        <div className="wordle-notification">
+          {notification}
+        </div>
+      )}
+      
+      <div className="wordle-container">
+        <div className="wordle-header">
+          <h1 className="wordle-title">CRASH WORDLE</h1>
+          <div className="wordle-stats">
+            <div className="stat-item">
+              <img src={gemImg} alt="Reliquias" className="stat-icon" />
+              <span className="stat-value">{relicCount}</span>
+            </div>
+            <div className="stat-item timer">
+              <span className="timer-icon">⏰</span>
+              <span className="stat-value">{timeLeft}s</span>
+            </div>
+          </div>
         </div>
 
-        <div className="game-section">
-          <h1 className="title">CRASH WORDLE</h1>
-          <GameBoard guesses={fullGuesses} evaluations={evaluations} />
-          <Keyboard onKeyPress={handleKeyInput} letterStatuses={letterStatuses} />
+        <div className="wordle-content">
+          <div className="game-section">
+            <GameBoard guesses={fullGuesses} evaluations={evaluations} />
+            <Keyboard onKeyPress={handleKeyInput} letterStatuses={letterStatuses} />
+          </div>
+          
+          <div className="wordle-controls">
+            <button 
+              className="rules-button" 
+              onClick={() => setShowRules(true)}
+            >
+              ℹ️ Reglas
+            </button>
+          </div>
         </div>
       </div>
 

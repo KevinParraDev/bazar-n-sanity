@@ -22,15 +22,36 @@ const getRewardByAngle = (angle: number) => {
 };
 
 const WheelModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-    const { addCurrency } = useEconomy();
+    const { addCurrency, spendCurrency, relicCount } = useEconomy();
     const [spinning, setSpinning] = useState(false);
     const [rotation, setRotation] = useState(0);
     const [result, setResult] = useState<string | null>(null);
+    const [notification, setNotification] = useState<string | null>(null);
+
+    const showNotification = (message: string) => {
+        setNotification(message);
+        setTimeout(() => setNotification(null), 3000);
+    };
 
     const handleSpin = () => {
         if (spinning) return;
+        
+        // Verificar si el jugador tiene suficientes reliquias
+        if (relicCount < 5) {
+            showNotification(`Necesitas ${5 - relicCount} reliquias más para girar`);
+            return;
+        }
+        
+        // Gastar las reliquias
+        const success = spendCurrency('relic', 5);
+        if (!success) {
+            showNotification('Error: No se pudieron gastar las reliquias');
+            return;
+        }
+        
         setSpinning(true);
         setResult(null);
+        showNotification('5 reliquias gastadas. ¡Girando la ruleta!');
 
         const extraSpins = 5 * 360; // al menos 5 vueltas
         const randomAngle = Math.floor(Math.random() * 360);
@@ -43,13 +64,40 @@ const WheelModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             addCurrency(reward.type as any, reward.amount);
             setResult(`¡Ganaste ${reward.amount} ${reward.type === "gem" ? "gema(s)" : "frutas wumpa"}!`);
             setSpinning(false);
+            
+            // Limpiar el resultado después de 4 segundos para permitir nuevos giros
+            setTimeout(() => {
+                setResult(null);
+            }, 4000);
         }, 4000); // mismo tiempo que la transición
     };
 
     return (
         <div className="wheel-modal-backdrop" onClick={onClose}>
+            {notification && (
+                <div className="wheel-notification">
+                    {notification}
+                </div>
+            )}
+            
             <div className="wheel-modal" onClick={(e) => e.stopPropagation()}>
-                <h2>Gira la ruleta</h2>
+                <div className="modal-header">
+                    <h2>Gira la ruleta</h2>
+                    <button className="close-button" onClick={onClose}>✕</button>
+                </div>
+                
+                {/* Información de reliquias */}
+                <div className="wheel-info">
+                    <div className="wheel-cost">
+                        <img src="/images/time_relic_crash.webp" alt="Reliquia" className="cost-icon" />
+                        <span>Costo: 5 reliquias</span>
+                    </div>
+                    <div className="player-relics">
+                        <img src="/images/time_relic_crash.webp" alt="Reliquia" className="cost-icon" />
+                        <span>Tienes: {relicCount}</span>
+                    </div>
+                </div>
+                
                 <div className="wheel-wrapper">
                     <img
                         src="/images/ruleta.png"
@@ -59,13 +107,20 @@ const WheelModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     />
                     <div className="wheel-pointer">▼</div>
                 </div>
-                {!result ? (
-                    <button className="button-wheel" onClick={handleSpin} disabled={spinning}>
-                        {spinning ? "Girando..." : "Girar"}
-                    </button>
-                ) : (
-                    <button className="button-wheel" onClick={onClose}>Cerrar</button>
-                )}
+                
+                <button 
+                    className={`button-wheel ${relicCount < 5 ? 'disabled' : ''}`} 
+                    onClick={handleSpin} 
+                    disabled={spinning || relicCount < 5}
+                >
+                    {spinning 
+                        ? "Girando..." 
+                        : relicCount < 5 
+                            ? `Necesitas ${5 - relicCount} reliquias más` 
+                            : "Girar (5 reliquias)"
+                    }
+                </button>
+                
                 {result && <p className="wheel-result">{result}</p>}
             </div>
         </div>
