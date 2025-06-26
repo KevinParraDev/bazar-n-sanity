@@ -5,6 +5,7 @@ import IslandExploration from './pages/IslandExploration'
 import UnityGame from './pages/FruitCatchers';
 import CrashFlap from './pages/CrashFlap';
 import Inventory from './pages/Inventory';
+import WordlePage from "./pages/WordlePage";
 import './App.css'
 
 
@@ -17,6 +18,7 @@ function App() {
       <Route path="/island-of-lost-treasures" element={<IslandOfLostTreasures/>} />
       <Route path="/crashflap" element={<CrashFlap />} />
       <Route path="/inventory" element={<Inventory />} />
+      <Route path="/wordle" element={<WordlePage />} />
     </Routes>
   )
 }

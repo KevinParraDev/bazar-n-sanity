@@ -15,7 +15,7 @@ body {
   padding: 0;
   height: 100%;
   font-family: 'LuckiestGuy', cursive;
-  background: url('/crash.webp') no-repeat center center fixed;
+  background: url('../assets/background_island_of_lost_treasures.png') no-repeat center center fixed;
   background-size: cover;
   overflow-x: hidden;
 }
@@ -32,24 +32,28 @@ body {
 .layout {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
+  justify-content: center;
+  align-items: flex-start;
   width: 100%;
-  max-width: 900px;
+  max-width: 1000px;
   height: 100%;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 2rem; 
+  padding: 2rem;
   box-sizing: border-box;
+  margin: 0 auto;
 }
 
+
 .sidebar {
-  width: 200px;
+  width: 220px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 1rem;
+  gap: 1.5rem;
   color: white;
+  padding-top: 1rem;
 }
+
 
 .sidebar button {
   font-size: 0.9rem;
@@ -71,9 +75,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  overflow: hidden;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-top: 1rem;
 }
+
 
 .board {
   display: grid;
@@ -216,10 +222,18 @@ body {
   }
 }
 
+.relic-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  color: white;
+  margin: 0;
+}
+
 .wumpa-icon {
   width: 24px;
   height: 24px;
-  vertical-align: middle;
-  margin-right: 8px;
+  object-fit: contain;
 }
 

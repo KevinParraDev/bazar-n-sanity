@@ -8,6 +8,8 @@ import minigameWumpa from '../assets/minigame-wumpa.png';
 import minigameLostTreasures from '../assets/minigame-lost-treasures.png';
 import { useState, useEffect } from 'react';
 import StorePage from '../components/Store/StorePage';
+import WordleGame from '../components/wordle/WordleGame';
+
 
 const islandsConfig = {
   'wumpa-island': {
@@ -23,7 +25,8 @@ const islandsConfig = {
     backgroundImage: bgIslandOfLostTreasures,
     minigameBackground: minigameLostTreasures,
     minigames: [
-      { id: 'crash-flap', name: 'CRASH FLAP', route: '/crashflap' }
+      { id: 'crash-flap', name: 'CRASH FLAP', route: '/crashflap' },
+      { id: 'wordle', name: 'CRASH WORDLE', route: '/wordle'}
     ]
   }
 };

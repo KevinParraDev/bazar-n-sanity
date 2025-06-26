@@ -1,8 +1,5 @@
-// src/components/Keyboard.tsx
-
 import React from "react";
-import "../index.css";
-
+import "../../styles/wordle.css";
 type KeyboardProps = {
   onKeyPress: (key: string) => void;
   letterStatuses: Record<string, "correct" | "present" | "absent" | undefined>;
