@@ -3,7 +3,14 @@
 Aplicativo web inspirado en el universo colorido y caótico de Crash Bandicoot
 
 ---
+## Integrantes
 
+- Kevin Santiago Parra Romero
+- Juan Jose Marin Alvarez
+- Juan Esteban Gomez Acero
+- Jhon Jader Córdoba Magaña
+
+-----
 ## Tecnologia utilizada
 
 - React + Typescript

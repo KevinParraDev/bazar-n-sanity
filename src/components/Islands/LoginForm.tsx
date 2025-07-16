@@ -7,20 +7,41 @@ const LoginForm: React.FC = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email && password) {
-      setMessage('✅ Sesión iniciada correctamente');
-      navigate("/home");
-    } else {
-      setMessage('❌ Ingresa correo y contraseña');
+
+    console.log("🟢 Enviando datos al backend:", email, password);
+
+    try {
+      const response = await fetch('http://localhost:3001/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage('✅ Sesión iniciada correctamente');
+        setTimeout(() => {
+          navigate('/home');
+        }, 1000);
+      } else {
+        setMessage(`❌ ${data.error}`);
+      }
+    } catch (error) {
+      console.error('❌ Error al conectar con el backend:', error);
+      setMessage('❌ No se pudo conectar con el servidor');
     }
+
     setTimeout(() => setMessage(''), 3000);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Iniciar Sesión</h2>
+      <h2>Iniciar Sesión (verificado)</h2>
       <input
         type="email"
         placeholder="Correo"
