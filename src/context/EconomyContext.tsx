@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, type ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
 
 export type CurrencyType = "wumpa" | "gem" | "golden" | "relic";
 
@@ -13,33 +19,66 @@ interface EconomyContextType {
   getCurrency: (type: CurrencyType) => number;
 }
 
+// 👤 ID del usuario global
+let currentUserId: number | null = null;
+export const setGlobalUserId = (id: number) => {
+  currentUserId = id;
+};
+
 const EconomyContext = createContext<EconomyContextType | undefined>(undefined);
 
 export const EconomyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [wumpaCount, setWumpaCount] = useState(300);
-  const [gemCount, setGemCount] = useState(5);
+  const [wumpaCount, setWumpaCount] = useState(0);
+  const [gemCount, setGemCount] = useState(0);
   const [goldenCount, setGoldenCount] = useState(0);
-  const [relicCount, setRelicCount] = useState(5); // Comenzar con 5 reliquias para prueba
+  const [relicCount, setRelicCount] = useState(0);
+
+  // 🛰️ Sincronizar con backend
+  const syncWalletWithBackend = async () => {
+    if (currentUserId === null) return;
+
+    try {
+      await fetch("http://localhost:3001/api/wallet/update", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: currentUserId,
+          wumpa: wumpaCount,
+          gem: gemCount,
+          golden: goldenCount,
+          relic: relicCount,
+        }),
+      });
+      console.log("💾 Monedas sincronizadas con backend");
+    } catch (error) {
+      console.error("❌ Error al sincronizar wallet:", error);
+    }
+  };
+
+  // ⏱️ Efecto de sincronización automática
+  useEffect(() => {
+    syncWalletWithBackend();
+  }, [wumpaCount, gemCount, goldenCount, relicCount]);
 
   const addCurrency = (type: CurrencyType, amount: number) => {
-    if (type === "wumpa") setWumpaCount(prev => prev + amount);
-    else if (type === "gem") setGemCount(prev => prev + amount);
-    else if (type === "golden") setGoldenCount(prev => prev + amount);
-    else if (type === "relic") setRelicCount(prev => prev + amount);
+    if (type === "wumpa") setWumpaCount((prev) => prev + amount);
+    else if (type === "gem") setGemCount((prev) => prev + amount);
+    else if (type === "golden") setGoldenCount((prev) => prev + amount);
+    else if (type === "relic") setRelicCount((prev) => prev + amount);
   };
 
   const spendCurrency = (type: CurrencyType, amount: number): boolean => {
     if (type === "wumpa" && wumpaCount >= amount) {
-      setWumpaCount(prev => prev - amount);
+      setWumpaCount((prev) => prev - amount);
       return true;
     } else if (type === "gem" && gemCount >= amount) {
-      setGemCount(prev => prev - amount);
+      setGemCount((prev) => prev - amount);
       return true;
     } else if (type === "golden" && goldenCount >= amount) {
-      setGoldenCount(prev => prev - amount);
+      setGoldenCount((prev) => prev - amount);
       return true;
     } else if (type === "relic" && relicCount >= amount) {
-      setRelicCount(prev => prev - amount);
+      setRelicCount((prev) => prev - amount);
       return true;
     }
     return false;
@@ -80,6 +119,7 @@ export const EconomyProvider: React.FC<{ children: ReactNode }> = ({ children })
 
 export const useEconomy = (): EconomyContextType => {
   const context = useContext(EconomyContext);
-  if (!context) throw new Error("useEconomy debe usarse dentro de EconomyProvider");
+  if (!context)
+    throw new Error("useEconomy debe usarse dentro de EconomyProvider");
   return context;
 };
