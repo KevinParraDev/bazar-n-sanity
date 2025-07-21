@@ -51,7 +51,7 @@ const UnityGame: React.FC = () => {
         boxSizing: "border-box",
       }}
     >
-      <Navbar username="Kevin" />
+      <Navbar />
       {/* Título del juego */}
       <h1 style={{ color: "#ffe6d7", marginBottom: "1rem" }}>Fruit Catchers</h1>
 

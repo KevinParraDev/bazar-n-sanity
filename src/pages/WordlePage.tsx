@@ -4,7 +4,7 @@ import Navbar from "../components/Islands/Navbar";
 export default function WordlePage() {
   return (
     <>
-      <Navbar username="Crash" />
+      <Navbar />
       <WordleGame />
     </>
   );

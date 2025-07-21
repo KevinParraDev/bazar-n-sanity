@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import { useEconomy } from "../../context/EconomyContext";
+import { useAuth } from "../../context/AuthContext";
 import { Link, useLocation } from "react-router-dom";
 import LogoutModal from "./LogoutModal";
 
-interface Props {
-  username: string;
-}
-
-const Navbar: React.FC<Props> = ({ username }) => {
+const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const { wumpaCount, gemCount, relicCount } = useEconomy();
+  const { username, logout } = useAuth();
   const location = useLocation();
 
   // Verificar si estamos en la página de inicio
@@ -31,9 +29,8 @@ const Navbar: React.FC<Props> = ({ username }) => {
   };
 
   const handleLogoutConfirm = () => {
-    // Limpiar localStorage y redirigir
-    localStorage.clear();
-    window.location.href = '/';
+    // Usar el logout del contexto que maneja todo correctamente
+    logout();
   };
 
   const handleLogoutCancel = () => {

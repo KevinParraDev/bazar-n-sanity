@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,6 +27,13 @@ const LoginForm: React.FC = () => {
 
       if (response.ok) {
         setMessage('✅ Sesión iniciada correctamente');
+        
+        // Extraer username del email (parte antes del @) como fallback
+        const username = email.split('@')[0];
+        
+        // Llamar al login del contexto con los datos del usuario
+        login(email, username, data.userId || email);
+        
         setTimeout(() => {
           navigate('/home');
         }, 1000);
