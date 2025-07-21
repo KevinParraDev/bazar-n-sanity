@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import { useEconomy } from "../../context/EconomyContext";
 import { Link, useLocation } from "react-router-dom";
+import LogoutModal from "./LogoutModal";
 
 interface Props {
   username: string;
@@ -10,6 +11,7 @@ interface Props {
 const Navbar: React.FC<Props> = ({ username }) => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const { wumpaCount, gemCount, relicCount } = useEconomy();
   const location = useLocation();
 
@@ -22,6 +24,21 @@ const Navbar: React.FC<Props> = ({ username }) => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const handleLogoutClick = () => {
+    setLogoutModalOpen(true);
+    setMenuOpen(false); // Cerrar el menú móvil si está abierto
+  };
+
+  const handleLogoutConfirm = () => {
+    // Limpiar localStorage y redirigir
+    localStorage.clear();
+    window.location.href = '/';
+  };
+
+  const handleLogoutCancel = () => {
+    setLogoutModalOpen(false);
+  };
 
   return (
     <>
@@ -49,6 +66,9 @@ const Navbar: React.FC<Props> = ({ username }) => {
               Inventario
             </Link>
           )}
+          <button className="navbar-button logout-button" onClick={handleLogoutClick} title="Cerrar Sesión">
+            ⏻
+          </button>
         </div>
 
         <button className="menu-toggle mobile-only" onClick={() => setMenuOpen(!menuOpen)}>
@@ -79,8 +99,17 @@ const Navbar: React.FC<Props> = ({ username }) => {
             </Link>
           )}
           <div className="mobile-item">👤 {username}</div>
+          <button className="mobile-item logout-mobile-button" onClick={handleLogoutClick}>
+            ⏻ Cerrar Sesión
+          </button>
         </div>
       )}
+
+      <LogoutModal 
+        isOpen={logoutModalOpen}
+        onConfirm={handleLogoutConfirm}
+        onCancel={handleLogoutCancel}
+      />
     </>
   );
 };

@@ -54,10 +54,56 @@
   border: 1px solid white;
   border-radius: 6px;
   transition: background-color 0.3s;
+  background: none;
+  cursor: pointer;
 }
 
 .navbar-button:hover {
   background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Botón de logout específico */
+.logout-button {
+  background: rgba(220, 38, 38, 0.3) !important;
+  border: 1px solid rgba(220, 38, 38, 0.6) !important;
+  font-size: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.logout-button:hover {
+  background: rgba(220, 38, 38, 0.6) !important;
+  border: 1px solid rgba(220, 38, 38, 0.8) !important;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+.logout-mobile-button {
+  color: white;
+  background: rgba(220, 38, 38, 0.3);
+  border: 1px solid rgba(220, 38, 38, 0.6);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  width: 100%;
+  backdrop-filter: blur(4px);
+}
+
+.logout-mobile-button:hover {
+  background: rgba(220, 38, 38, 0.6);
+  border: 1px solid rgba(220, 38, 38, 0.8);
+  transform: translateY(-1px);
 }
 
 .navbar-username {
