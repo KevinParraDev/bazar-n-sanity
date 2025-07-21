@@ -48,7 +48,7 @@ export const InventoryProvider: React.FC<{ children: ReactNode }> = ({ children 
   const equipMask = (mask: Product) => {
     if (mask.category === 'mask') {
       setEquippedMask(mask);
-      console.log('Máscara equipada:', mask.name);
+      console.log('Máscara equipada:', mask.name, 'ID:', mask.id, 'Color:', mask.colors[0].name);
     }
   };
 
@@ -64,7 +64,8 @@ export const InventoryProvider: React.FC<{ children: ReactNode }> = ({ children 
     return inventory.some(
       (item) =>
         item.product.id === product.id &&
-        item.product.colors[0].name === product.colors[0].name
+        item.product.colors[0].name === product.colors[0].name &&
+        item.product.name === product.name
     );
   };
 

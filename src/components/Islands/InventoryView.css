@@ -115,6 +115,14 @@
   align-items: center;
 }
 
+.mask-variant {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #cbd5e0;
+  font-style: italic;
+  text-align: center;
+}
+
 .equip-button {
   background: #4299e1;
   color: white;
