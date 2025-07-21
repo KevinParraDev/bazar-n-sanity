@@ -14,7 +14,7 @@ const Bird = ({ y }: BirdProps) => {
   useEffect(() => {
     const velocity = y - prevY;
     
-    if (velocity < -2) { // Si está subiendo rápido (acaba de saltar)
+    if (velocity < -2) { 
       setIsFlapping(true);
       const timer = setTimeout(() => setIsFlapping(false), 200);
       return () => clearTimeout(timer);
