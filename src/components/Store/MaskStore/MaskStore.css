@@ -119,13 +119,13 @@
   }
   
   .mask-store-header h2 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
   .masks-grid-horizontal {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
 }

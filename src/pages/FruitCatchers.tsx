@@ -74,11 +74,11 @@ const UnityGame: React.FC = () => {
       {/* Puntaje + botón */}
       <div style={{ marginTop: "1rem", textAlign: "center", color: "white" }}>
         <p className="points">Puntaje obtenido: <strong>{score}</strong></p>
-        <Link to="/home">
+        <Link to="/explore/wumpa-island">
           <button
             className="minigame-fruitCatcher-button"
           >
-            Volver a Inicio
+            Volver a la isla wumpa
           </button>
         </Link>
         

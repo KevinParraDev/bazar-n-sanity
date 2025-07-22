@@ -71,3 +71,16 @@ input:focus {
 .auth h2 {
     padding-bottom: 15px;
 }
+
+@media (max-width: 480px){
+  .auth-container {
+  width: 90%;
+  max-width: 400px;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  animation: fadeIn 0.4s ease-in-out;
+}
+}

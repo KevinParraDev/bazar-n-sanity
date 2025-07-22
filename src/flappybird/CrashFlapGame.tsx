@@ -383,7 +383,7 @@ const CrashFlapGame = () => {
             <button
               onClick={() => {
                 restart();
-                setTimeout(() => navigate('/home'), 0);
+                setTimeout(() => navigate('/explore/lost-treasures'), 0);
               }}
               disabled={isProcessingRewards}
               style={{

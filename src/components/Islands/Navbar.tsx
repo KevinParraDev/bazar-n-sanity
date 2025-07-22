@@ -63,6 +63,7 @@ const Navbar: React.FC = () => {
               Inventario
             </Link>
           )}
+          <div className="mobile-item">{username}</div>
           <button className="navbar-button logout-button" onClick={handleLogoutClick} title="Cerrar Sesión">
             ⏻
           </button>
@@ -96,8 +97,8 @@ const Navbar: React.FC = () => {
             </Link>
           )}
           <div className="mobile-item">👤 {username}</div>
-          <button className="mobile-item logout-mobile-button" onClick={handleLogoutClick}>
-            ⏻ Cerrar Sesión
+          <button className="logout-mobile-button" onClick={handleLogoutClick}>
+            Cerrar Sesión
           </button>
         </div>
       )}

@@ -95,7 +95,7 @@
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  text-align: left;
+  text-align: center;
   width: 100%;
   backdrop-filter: blur(4px);
 }
@@ -141,19 +141,25 @@
   .navbar-left {
     color: transparent;
   }
+
+  .navbar{
+    padding: 0 30px;
+  }
 }
 
-/* Mobile menu dropdown */
 .mobile-menu {
   position: fixed;
-  top: 60px;
+  top: 0;               /* Añade esto */
+  bottom: 0;            /* Añade esto */
   right: 0;
   left: 0;
   background-color: rgba(10, 20, 60, 0.95);
   padding: 12px 24px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
   z-index: 998;
   color: white;
 }
