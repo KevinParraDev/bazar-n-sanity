@@ -16,9 +16,12 @@ Aplicativo web inspirado en el universo colorido y caótico de Crash Bandicoot
 - React + Typescript
 - Vite
 - Css
+- Unity
+- Node
+- Express
 
 -----
-## Instalacion del aplicativo web
+## Instalacion del aplicativo web (Frontend)
 
 Se debe tener instalado node.js v16, npm y git (opcional para clonar el repositorio)
 
@@ -28,21 +31,36 @@ Se instala las dependencias (npm install)
 
 Se inicia el servidor de desarrollo (npm run dev)
 
+## Instalacion del aplicativo web (Backend)
 
+Se debe tener instalado node.js v16, npm y git (opcional para clonar el repositorio)
+
+Entrar a la carpeta Backend (puedes usar el comando: cd backend)
+
+Se instala las dependencias (npm install)
+
+Se inicia el servidor de desarrollo (npm run dev)
+
+Se debe hacer el proceso tanto en el frontend como en el backend para usar correctamente el aplicativo web
+
+-----
 ## ESTRUCTURA DEL PROYECTO
-
-- login #Todo lo relacionado con Login y registro de usuarios
+- backend Todo lo relacionado con el backend (validaciones, creacion de tablas, modulo de sql, controladores)
 - public Todo lo que tiene que ver con imagenes del aplicativo y sprites de los minijuegos
 - src/
-    Components # Estructura base de minijuegos, vista del inventario, navegacion y lo relacionado a el bazar
+    assets Almacena fondos de juegos, iconos de monedas del aplicativo y fuentes
 
-    Context # Manejo de la economia y el inventario
+    hooks Relacionado a la estructura para almacenar el inventario
 
-    Flappy Bird # Relacionado al minijuego Crash Flap
+    Components Estructura base de minijuegos, vista del inventario, navegacion y lo relacionado a el bazar
 
-    Pages # Paginas en las que se pueden navegar, la vista de cada isla y su respectiva exploracion (vista de minijuegos)
+    Context Manejo de la economia y el inventario
 
-    Utils # Relacionado a las palabras usadas en el minijuego de Wordle
+    Flappy Bird Relacionado al minijuego Crash Flap
+
+    Pages Paginas en las que se pueden navegar, la vista de cada isla y su respectiva exploracion (vista de minijuegos)
+
+    Utils Relacionado a las palabras usadas en el minijuego de Wordle
 
 - App.tsx Rutas de cada archivo que hay en el proyecto
 
