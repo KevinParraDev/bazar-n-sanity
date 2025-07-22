@@ -44,10 +44,10 @@ export const EconomyProvider: React.FC<{ children: ReactNode }> = ({ children })
       if (savedEconomy) {
         try {
           const economyData = JSON.parse(savedEconomy);
-          setWumpaCount(economyData.wumpa || defaultCurrencies.wumpa);
-          setGemCount(economyData.gem || defaultCurrencies.gem);
-          setGoldenCount(economyData.golden || defaultCurrencies.golden);
-          setRelicCount(economyData.relic || defaultCurrencies.relic);
+          setWumpaCount(economyData.wumpa ?? defaultCurrencies.wumpa);
+          setGemCount(economyData.gem ?? defaultCurrencies.gem);
+          setGoldenCount(economyData.golden ?? defaultCurrencies.golden);
+          setRelicCount(economyData.relic ?? defaultCurrencies.relic);
         } catch (error) {
           console.error('Error loading user economy data:', error);
           // Si hay error, usar valores por defecto
