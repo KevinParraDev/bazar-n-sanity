@@ -6,17 +6,41 @@ const RegisterForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (name && email && password) {
-      setMessage('✅ Cuenta creada con éxito');
-      setName('');
-      setEmail('');
-      setPassword('');
-    } else {
+
+    if (!name || !email || !password) {
       setMessage('❌ Todos los campos son obligatorios');
+      setTimeout(() => setMessage(''), 3000);
+      return;
     }
-    setTimeout(() => setMessage(''), 3000);
+
+    try {
+      const response = await fetch('http://localhost:3001/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password }) // ⚠️ El backend aún no recibe name
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.warn("❌ Error del servidor:", data);
+        setMessage(`❌ ${data.error}`);
+      } else {
+        setMessage('✅ Cuenta creada con éxito');
+        setName('');
+        setEmail('');
+        setPassword('');
+      }
+    } catch (error) {
+      console.error('❌ Error de red o backend caído:', error);
+      setMessage('❌ No se pudo conectar con el servidor');
+    }
+
+    setTimeout(() => setMessage(''), 4000);
   };
 
   return (

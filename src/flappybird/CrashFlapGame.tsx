@@ -32,14 +32,11 @@ const CrashFlapGame = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   // Estado para el popup de reglas
-  const [showRules, setShowRules] = useState(false);
+  const [showRules, setShowRules] = useState(true); // Mostrar siempre al inicio
 
-  // Mostrar reglas la primera vez que se entra al juego
+  // Mostrar reglas siempre al entrar al juego
   useEffect(() => {
-    const hasSeenRules = localStorage.getItem('crashFlap_hasSeenRules');
-    if (!hasSeenRules) {
-      setShowRules(true);
-    }
+    setShowRules(true);
   }, []);
 
   useEffect(() => {
@@ -252,6 +249,45 @@ const CrashFlapGame = () => {
           <span style={{ fontWeight: 'bold', fontSize: 32 }}>{relicsCollected}</span>
         </div>
       </div>
+
+      {/* Botón de ayuda */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          setShowRules(true);
+        }}
+        style={{
+          position: 'absolute',
+          top: 10,
+          right: 10,
+          width: 40,
+          height: 40,
+          borderRadius: '50%',
+          backgroundColor: 'rgba(255, 215, 0, 0.9)',
+          border: '2px solid #fff',
+          color: '#000',
+          fontSize: 20,
+          fontWeight: 'bold',
+          cursor: 'pointer',
+          zIndex: 3,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)',
+          transition: 'all 0.3s ease'
+        }}
+        onMouseOver={(e) => {
+          (e.target as HTMLButtonElement).style.backgroundColor = 'rgba(255, 215, 0, 1)';
+          (e.target as HTMLButtonElement).style.transform = 'scale(1.1)';
+        }}
+        onMouseOut={(e) => {
+          (e.target as HTMLButtonElement).style.backgroundColor = 'rgba(255, 215, 0, 0.9)';
+          (e.target as HTMLButtonElement).style.transform = 'scale(1)';
+        }}
+        title="Ver instrucciones"
+      >
+        ?
+      </button>
       {isGameOver && (
         <>
           { /* Overlay para el fin del juego */}
@@ -347,7 +383,7 @@ const CrashFlapGame = () => {
             <button
               onClick={() => {
                 restart();
-                setTimeout(() => navigate('/home'), 0);
+                setTimeout(() => navigate('/explore/lost-treasures'), 0);
               }}
               disabled={isProcessingRewards}
               style={{
@@ -386,7 +422,6 @@ const CrashFlapGame = () => {
           }}
           onClick={() => {
             setShowRules(false);
-            localStorage.setItem('crashFlap_hasSeenRules', 'true');
           }}
         >
           <div 
@@ -407,20 +442,18 @@ const CrashFlapGame = () => {
               🎮 CRASH FLAP
             </h2>
             <div style={{ textAlign: 'left', marginBottom: '20px', fontSize: isMobile ? '14px' : '16px', lineHeight: '1.5' }}>
-              <p><strong>🎯 Objetivo:</strong> Ayuda a Crash a volar por los tótems sin chocar</p>
-              <p><strong>🕹️ Control:</strong> Toca la pantalla o presiona ESPACIO para volar</p>
+              <p><strong>🎯 Objetivo:</strong> Ayuda a las máscaras a cruzar los tótems sin chocar</p>
+              <p><strong>🕹️ Control:</strong> Toca la pantalla para volar</p>
               <p><strong>💰 Recompensas:</strong></p>
               <ul style={{ marginLeft: '20px' }}>
-                <li>🥭 1 Wumpa por cada punto</li>
-                <li>💎 1 Gema cada 10 puntos</li>
-                <li>⏳ Reliquias especiales flotantes</li>
+                <li>🥭 2 Wumpas por cada tótem de cruzado</li>
+                <li>💎 Gemas especiales flotantes</li>
               </ul>
               <p><strong>⚠️ Tip:</strong> ¡Equipa diferentes máscaras desde tu inventario!</p>
             </div>
             <button
               onClick={() => {
                 setShowRules(false);
-                localStorage.setItem('crashFlap_hasSeenRules', 'true');
               }}
               style={{
                 backgroundColor: '#4caf50',

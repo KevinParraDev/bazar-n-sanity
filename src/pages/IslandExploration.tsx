@@ -72,7 +72,7 @@ const IslandExploration = () => {
             url(${island.backgroundImage}) center center / cover no-repeat`
         }}
       >
-        <Navbar username="Kevin" />
+        <Navbar />
         <div className={`island-title-container ${isMobile ? 'mobile' : ''}`}>
           <h1 className={`island-title ${isMobile ? 'mobile' : isTablet ? 'tablet' : ''}`}>
             {island.name}

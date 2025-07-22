@@ -8,7 +8,7 @@ const Inventory = () => {
       className="w-screen min-h-screen bg-cover bg-center transition-all duration-700 relative"
       style={{ backgroundImage: `url(${bgWumpaIsland})` }}
     >
-      <Navbar username="Kevin" />      {/* Título e inventario en contenedor scrolleable */}
+      <Navbar />      {/* Título e inventario en contenedor scrolleable */}
       <div style={{ 
         paddingTop: '100px', 
         paddingBottom: '30px',

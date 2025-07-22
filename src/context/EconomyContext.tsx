@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, type ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import { useAuth } from "./AuthContext";
 
 export type CurrencyType = "wumpa" | "gem" | "golden" | "relic";
 
@@ -15,11 +16,71 @@ interface EconomyContextType {
 
 const EconomyContext = createContext<EconomyContextType | undefined>(undefined);
 
+// Valores por defecto para cada nuevo usuario
+const defaultCurrencies = {
+  wumpa: 300,
+  gem: 5,
+  golden: 0,
+  relic: 5
+};
+
 export const EconomyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [wumpaCount, setWumpaCount] = useState(300);
-  const [gemCount, setGemCount] = useState(5);
-  const [goldenCount, setGoldenCount] = useState(0);
-  const [relicCount, setRelicCount] = useState(5); // Comenzar con 5 reliquias para prueba
+  const [wumpaCount, setWumpaCount] = useState(defaultCurrencies.wumpa);
+  const [gemCount, setGemCount] = useState(defaultCurrencies.gem);
+  const [goldenCount, setGoldenCount] = useState(defaultCurrencies.golden);
+  const [relicCount, setRelicCount] = useState(defaultCurrencies.relic);
+  
+  const { userId, isAuthenticated } = useAuth();
+
+  // Generar clave única para cada usuario
+  const getUserEconomyKey = () => userId ? `gameEconomy_${userId}` : 'gameEconomy_guest';
+
+  // Cargar datos del usuario específico del localStorage al inicializar
+  useEffect(() => {
+    if (isAuthenticated && userId) {
+      const userEconomyKey = getUserEconomyKey();
+      const savedEconomy = localStorage.getItem(userEconomyKey);
+      
+      if (savedEconomy) {
+        try {
+          const economyData = JSON.parse(savedEconomy);
+          setWumpaCount(economyData.wumpa ?? defaultCurrencies.wumpa);
+          setGemCount(economyData.gem ?? defaultCurrencies.gem);
+          setGoldenCount(economyData.golden ?? defaultCurrencies.golden);
+          setRelicCount(economyData.relic ?? defaultCurrencies.relic);
+        } catch (error) {
+          console.error('Error loading user economy data:', error);
+          // Si hay error, usar valores por defecto
+          resetToDefaults();
+        }
+      } else {
+        // Usuario nuevo - establecer valores por defecto
+        resetToDefaults();
+      }
+    }
+  }, [userId, isAuthenticated]);
+
+  // Resetear a valores por defecto
+  const resetToDefaults = () => {
+    setWumpaCount(defaultCurrencies.wumpa);
+    setGemCount(defaultCurrencies.gem);
+    setGoldenCount(defaultCurrencies.golden);
+    setRelicCount(defaultCurrencies.relic);
+  };
+
+  // Guardar en localStorage específico del usuario cada vez que cambien las monedas
+  useEffect(() => {
+    if (isAuthenticated && userId) {
+      const userEconomyKey = getUserEconomyKey();
+      const economyData = {
+        wumpa: wumpaCount,
+        gem: gemCount,
+        golden: goldenCount,
+        relic: relicCount
+      };
+      localStorage.setItem(userEconomyKey, JSON.stringify(economyData));
+    }
+  }, [wumpaCount, gemCount, goldenCount, relicCount, userId, isAuthenticated]);
 
   const addCurrency = (type: CurrencyType, amount: number) => {
     if (type === "wumpa") setWumpaCount(prev => prev + amount);

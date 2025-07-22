@@ -259,7 +259,7 @@ export const treasureCollectibles: Product[] = [
 
 // Máscara Velo por defecto (no se vende, se incluye automáticamente)
 export const defaultMask: Product = {
-  id: 4,
+  id: 999,
   name: "Máscara Velo",
   price: 0,
   currency: "gem",

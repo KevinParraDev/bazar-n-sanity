@@ -51,7 +51,7 @@ const UnityGame: React.FC = () => {
         boxSizing: "border-box",
       }}
     >
-      <Navbar username="Kevin" />
+      <Navbar />
       {/* Título del juego */}
       <h1 style={{ color: "#ffe6d7", marginBottom: "1rem" }}>Fruit Catchers</h1>
 
@@ -74,11 +74,11 @@ const UnityGame: React.FC = () => {
       {/* Puntaje + botón */}
       <div style={{ marginTop: "1rem", textAlign: "center", color: "white" }}>
         <p className="points">Puntaje obtenido: <strong>{score}</strong></p>
-        <Link to="/home">
+        <Link to="/explore/wumpa-island">
           <button
             className="minigame-fruitCatcher-button"
           >
-            Volver a Inicio
+            Volver a la isla wumpa
           </button>
         </Link>
         

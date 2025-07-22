@@ -31,7 +31,7 @@ const Home = () => {
       className="w-screen h-screen bg-cover bg-center transition-all duration-700 relative overflow-hidden"
       style={{ backgroundImage: `url(${islands[index].img})` }}
     >
-      <Navbar username="Kevin" />      {/* Botón principal */}
+      <Navbar />      {/* Botón principal */}
       <div className="absolute bottom-10 w-full flex justify-center md:w-40 md:right-20 md:left-auto md:justify-start">
         <Link to={`/explore/${islands[index].exploreId}`}>
           <button className="main-button">

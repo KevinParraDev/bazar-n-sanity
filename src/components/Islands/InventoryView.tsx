@@ -8,6 +8,10 @@ const InventoryView: React.FC = () => {
     const masks = getMasks();
     const collectibles = getCollectibles();
 
+    // Debug: Log para verificar el estado
+    console.log('InventoryView - Equipped mask:', equippedMask);
+    console.log('InventoryView - Total masks:', masks.length);
+
     const handleEquipMask = (mask: any) => {
         equipMask(mask);
     };
@@ -20,30 +24,37 @@ const InventoryView: React.FC = () => {
                 <p className="section-subtitle">Equipa una máscara para usar en CrashFlap</p>
                 
                 <div className="masks-grid">
-                    {masks.map((item) => (
-                        <div 
-                            className={`mask-card ${equippedMask?.id === item.product.id ? 'equipped' : ''}`} 
-                            key={item.product.id + item.product.colors[0].name}
-                        >
-                            <div className="mask-card-inner">
-                                <img 
-                                    src={item.product.colors[0].image} 
-                                    alt={item.product.name} 
-                                    className="mask-image" 
-                                />
-                                <div className="mask-info">
-                                    <h3>{item.product.name}</h3>
+                    {masks.map((item) => {
+                        // Verificar si esta máscara específica está equipada comparando id y color
+                        const isEquipped = equippedMask?.id === item.product.id && 
+                                         equippedMask?.colors[0]?.name === item.product.colors[0]?.name;
+                        
+                        return (
+                            <div 
+                                className={`mask-card ${isEquipped ? 'equipped' : ''}`} 
+                                key={`mask-${item.product.id}-${item.product.colors[0].name}`}
+                            >
+                                <div className="mask-card-inner">
+                                    <img 
+                                        src={item.product.colors[0].image} 
+                                        alt={item.product.name} 
+                                        className="mask-image" 
+                                    />
+                                    <div className="mask-info">
+                                        <h3>{item.product.name}</h3>
+                                        <p className="mask-variant">{item.product.colors[0].name}</p>
+                                    </div>
+                                    <button 
+                                        className={`equip-button ${isEquipped ? 'equipped-btn' : ''}`}
+                                        onClick={() => handleEquipMask(item.product)}
+                                        disabled={isEquipped}
+                                    >
+                                        {isEquipped ? '✓ Equipada' : 'Equipar'}
+                                    </button>
                                 </div>
-                                <button 
-                                    className={`equip-button ${equippedMask?.id === item.product.id ? 'equipped-btn' : ''}`}
-                                    onClick={() => handleEquipMask(item.product)}
-                                    disabled={equippedMask?.id === item.product.id}
-                                >
-                                    {equippedMask?.id === item.product.id ? '✓ Equipada' : 'Equipar'}
-                                </button>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
                 
                 {masks.length === 0 && (
